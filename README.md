@@ -29,6 +29,9 @@
 # Clonar o repositório
 - git clone https://github.com/MiniDudi/UPX-III.git
 
+# Navegar para a pasta 'project'
+- cd .\UPX-III\project\
+
 # Instalar dependências
 - npm install
 
