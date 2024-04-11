@@ -2,7 +2,7 @@
   <HelloWorld />
 </template>
 
-<script setup>
+<script>
 import HelloWorld from '@/components/HelloWorld.vue';
 import { db } from '../firebase/index'
 import { onMounted } from 'vue';

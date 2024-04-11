@@ -4,18 +4,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '/',
         name: 'Login',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/loginPage.vue'),
       },
     ],
   },
   {
     path: '/home',
-    component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '/home',
@@ -26,7 +24,6 @@ const routes = [
   },
   {
     path: '/register',
-    component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
         path: '/register',
