@@ -2,9 +2,10 @@
     <v-row no-gutters align="center">
 
         <v-col cols="8" align="center" justify="center">
-            <div ref="imageWrapper" class="melao-icone-wrapper" @mousedown="startDrag" @mousemove="dragging" selectable="false"
-                @mouseup="endDrag">
-                <v-img class="melao-icone" width="200" alt="Vue logo" src="@/styles/novomelao.png" draggable="false" selectable="false" />
+            <div ref="imageWrapper" class="melao-icone-wrapper" @mousedown="startDrag" @mousemove="dragging"
+                selectable="false" @mouseup="endDrag">
+                <v-img class="melao-icone" width="200" alt="Vue logo" src="@/styles/novomelao.png" draggable="false"
+                    selectable="false" />
             </div>
         </v-col>
         <v-col cols="4" align="center">
@@ -25,7 +26,7 @@
 
             <v-row no-gutters class="mb-9">
                 <v-col align="center">
-                    <v-btn elevation="0" rounded="0" color="#ffb300">Entrar</v-btn>
+                    <v-btn @click="login()" elevation="0" rounded="0" color="#ffb300">Entrar</v-btn>
                 </v-col>
             </v-row>
 
@@ -40,37 +41,76 @@
 
     </v-row>
 </template>
-<script setup>
+<script>
 import { ref } from 'vue';
+import AuthController from '@/controller/authController';
 
-const imageWrapper = ref(null);
-const mouseX = ref(0);
-const mouseY = ref(0);
-const draggingImage = ref(false);
-const startRotation = ref(0);
+const auth = new AuthController();
 
-function startDrag(event) {
-    draggingImage.value = true;
-    mouseX.value = event.clientX;
-    mouseY.value = event.clientY;
-    const currentTransform = imageWrapper.value ? imageWrapper.value.style.transform : 'rotate(0deg)';
-    startRotation.value = parseFloat(currentTransform.replace('rotate(', '').replace('deg)', '')) || 0;
-}
 
-function dragging(event) {
-    if (draggingImage.value && imageWrapper.value) {
-        const deltaX = event.clientX - mouseX.value;
-        const deltaY = event.clientY - mouseY.value;
-        const rotation = startRotation.value - deltaX;
-        imageWrapper.value.style.transform = `rotate(${rotation}deg)`;
+export default {
+    name: 'LoginPage',
+    components: {},
+    setup() {
+        const imageWrapper = ref(null);
+        return { imageWrapper };
+    },
+    data: () => ({
+        email: '',
+        password: '',
+        imageWrapper: null,
+        draggingImage: false,
+        startRotation: 0,
+        mouseX: 0,
+        mouseY: 0,
+    }),
+
+    mounted() {
+
+    },
+
+    created() {
+
+    },
+
+    methods: {
+        async login() {
+            try {
+                if (email != '' && password != '') {
+                    const credentials = { email: email, password: password };
+                    await auth.login(credentials);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        startDrag(event) {
+            this.draggingImage = true;
+            this.mouseX = event.clientX;
+            this.mouseY = event.clientY;
+            const currentTransform = this.imageWrapper.value ? this.imageWrapper.value.style.transform : 'rotate(0deg)';
+            this.startRotation = parseFloat(currentTransform.replace('rotate(', '').replace('deg)', '')) || 0;
+        },
+        dragging(event) {
+            try {
+                if (this.draggingImage && this.imageWrapper) {
+                    const deltaX = event.clientX - this.mouseX;
+                    const rotation = this.startRotation - deltaX;
+                    this.imageWrapper.style.transform = `rotate(${rotation}deg)`;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        endDrag() {
+            this.draggingImage = false;
+        }
     }
 }
 
-function endDrag() {
-    draggingImage.value = false;
-}
 </script>
-<style>
+<style scoped>
 .Titles {
     font-family: "Rubik", sans-serif;
     font-size: 38px;
