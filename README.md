@@ -1,4 +1,4 @@
-# Título do Projeto: EcoCommunity - Plataforma de Gestão de Recursos Alimentícios
+# EcoCommunity - Plataforma de Gestão de Recursos Alimentícios
 
 ## Descrição
 
@@ -52,4 +52,7 @@ Este projeto é aplicado internamente como parte de uma atividade acadêmica e n
 - Eduardo Natividade Pinese - 235182
 - Murilo da Cruz Floriano - 235284
 - Laura Bonilha - 236167
-- Amanda do Prado Alves - 235343 
+- Amanda do Prado Alves - 235343
+
+## Contatos
+- melaodev@gmail.com
