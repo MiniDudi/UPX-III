@@ -17,10 +17,12 @@
 
             <div class="mb-4">
                 <v-list-item>
-                    <v-text-field clearable label="Email" prepend-icon="mdi-email" variant="underlined" />
+                    <v-text-field clearable v-model="email" label="Email" prepend-icon="mdi-email"
+                        variant="underlined" />
                 </v-list-item>
                 <v-list-item>
-                    <v-text-field clearable label="Password" prepend-icon="mdi-lock" variant="underlined" width="20" />
+                    <v-text-field clearable v-model="password" label="Password" prepend-icon="mdi-lock"
+                        variant="underlined" width="20" />
                 </v-list-item>
             </div>
 
@@ -55,15 +57,17 @@ export default {
         const imageWrapper = ref(null);
         return { imageWrapper };
     },
-    data: () => ({
-        email: '',
-        password: '',
-        imageWrapper: null,
-        draggingImage: false,
-        startRotation: 0,
-        mouseX: 0,
-        mouseY: 0,
-    }),
+    data() {
+        return {
+            email: '',
+            password: '',
+            imageWrapper: null,
+            draggingImage: false,
+            startRotation: 0,
+            mouseX: 0,
+            mouseY: 0,
+        }
+    },
 
     mounted() {
 
@@ -76,15 +80,15 @@ export default {
     methods: {
         async login() {
             try {
-                if (email != '' && password != '') {
-                    const credentials = { email: email, password: password };
+                if (this.email != '' && this.password != '') {
+                    const credentials = { email: this.email, password: this.password };
                     await auth.login(credentials);
+                    this.$router.push({ path: '/home' })
                 }
             } catch (error) {
                 console.log(error);
             }
         },
-
         startDrag(event) {
             this.draggingImage = true;
             this.mouseX = event.clientX;

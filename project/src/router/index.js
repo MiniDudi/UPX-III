@@ -23,12 +23,42 @@ const routes = [
     ],
   },
   {
+    path: '/groupPage',
+    children: [
+      {
+        path: '/groupPage',
+        name: 'groupPage',
+        component: () => import('@/views/groupPage.vue'),
+      },
+    ],
+  },
+  {
     path: '/register',
     children: [
       {
         path: '/register',
         name: 'registerPage',
         component: () => import('@/views/Home.vue'),
+      },
+    ],
+  },
+  {
+    path: '/userConfig',
+    children: [
+      {
+        path: '/userConfig',
+        name: 'userConfig',
+        component: () => import('@/views/userPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/settingsPage',
+    children: [
+      {
+        path: '/settingsPage',
+        name: 'SettingsPage',
+        component: () => import('@/views/settingsPage.vue'),
       },
     ],
   },
