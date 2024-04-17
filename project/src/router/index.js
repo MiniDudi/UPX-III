@@ -23,10 +23,20 @@ const routes = [
     ],
   },
   {
-    path: '/groupPage',
+    path: '/organization',
     children: [
       {
-        path: '/groupPage',
+        path: '/organization',
+        name: 'organizationPage',
+        component: () => import('@/views/organizationPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/group',
+    children: [
+      {
+        path: '/group',
         name: 'groupPage',
         component: () => import('@/views/groupPage.vue'),
       },
@@ -47,7 +57,7 @@ const routes = [
     children: [
       {
         path: '/userConfig',
-        name: 'userConfig',
+        name: 'userPage',
         component: () => import('@/views/userPage.vue'),
       },
     ],
@@ -57,7 +67,7 @@ const routes = [
     children: [
       {
         path: '/settingsPage',
-        name: 'SettingsPage',
+        name: 'settingsPage',
         component: () => import('@/views/settingsPage.vue'),
       },
     ],

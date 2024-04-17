@@ -1,17 +1,18 @@
 <template>
-    <v-row no-gutters>
+    <v-row no-gutter>
         <v-col cols="12">
-            <p class="ml-10 mt-10 text-h2">Settings Page</p>
+            <p class="ml-10 mt-10 text-h2">Organization Page</p>
         </v-col>
     </v-row>
 </template>
 <script>
 export default {
-    name: 'SettingsPage',
+    name: 'OrganizationPage',
     data() {
         return {
 
         }
     },
 }
+
 </script>

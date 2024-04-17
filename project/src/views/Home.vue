@@ -1,7 +1,7 @@
 <template>
-  <v-row align="center" no-gutter>
-    <v-col cols="6">
-      <p class="ml-10 text-h2">Home Page</p>
+  <v-row no-gutter>
+    <v-col cols="12">
+      <p class="ml-10 mt-10 text-h2">Home Page</p>
     </v-col>
   </v-row>
 </template>
