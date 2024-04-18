@@ -1,9 +1,11 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="6" justify="start" align="start">
-            <p class="ml-10 mt-10 text-h2">Group Page</p>
-        </v-col>
-        <v-col cols="6" justify="end" align="end">
+    <v-col cols="12">
+
+        <v-row no-gutters>
+            <v-col cols="6" justify="start" align="start">
+                <p class="ml-10 mt-10 text-h2">Group Page</p>
+            </v-col>
+            <v-col cols="6" justify="end" align="end">
             <MemberModal />
         </v-col>
     </v-row>
@@ -15,6 +17,7 @@
             </v-card>
         </v-col>
     </v-row>
+</v-col>
 </template>
 
 <script>

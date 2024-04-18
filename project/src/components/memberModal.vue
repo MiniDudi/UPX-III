@@ -2,7 +2,7 @@
     <v-dialog max-width="500">
         <template v-slot:activator="{ props: activatorProps }">
             <v-btn class="mr-10 mt-15" v-bind="activatorProps" text="Adicionar Membro" elevation="0" roudend="0"
-                color="#ffb300"></v-btn>
+                color="#FFC641"></v-btn>
         </template>
 
         <template v-slot:default="{ isActive }">

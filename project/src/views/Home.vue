@@ -1,9 +1,11 @@
 <template>
-  <v-row no-gutter>
-    <v-col cols="12">
-      <p class="ml-10 mt-10 text-h2">Home Page</p>
-    </v-col>
-  </v-row>
+  <v-col cols="12">
+    <v-row no-gutter>
+      <v-col cols="12">
+        <p class="ml-10 mt-10 text-h2">Home Page</p>
+      </v-col>
+    </v-row>
+  </v-col>
 </template>
 
 <script>

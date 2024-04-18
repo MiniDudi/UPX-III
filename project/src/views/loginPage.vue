@@ -17,23 +17,23 @@
 
             <div class="mb-4">
                 <v-list-item>
-                    <v-text-field clearable v-model="email" label="Email" prepend-icon="mdi-email"
+                    <v-text-field clearable v-model="email" label="Email" prepend-icon="mdi-email" style="color: #000000"
                         variant="underlined" />
                 </v-list-item>
                 <v-list-item>
-                    <v-text-field clearable v-model="password" label="Password" prepend-icon="mdi-lock"
+                    <v-text-field clearable v-model="password" label="Password" prepend-icon="mdi-lock" style="color: #000000"
                         variant="underlined" width="20" />
                 </v-list-item>
             </div>
 
             <v-row no-gutters class="mb-9">
                 <v-col align="center">
-                    <v-btn @click="login()" elevation="0" rounded="0" color="#ffb300">Entrar</v-btn>
+                    <v-btn @click="login()" elevation="0" rounded="0" color="#FFC641" style="color: #000000">Entrar</v-btn>
                 </v-col>
             </v-row>
 
             <v-col cols="12">
-                <div class="text-subtitle-1">Doesn't have an account?</div>
+                <div class="text-subtitle-1" style="color: #000000">Doesn't have an account?</div>
                 <router-link to="/register" class="text-decoration-none">
                     <div class="text-subtitle-1">Register now!</div>
                 </router-link>
@@ -122,7 +122,7 @@ export default {
     text-align: center;
     font-weight: 600;
     line-height: initial;
-    background: #455a64;
+    background: #000000;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -135,7 +135,7 @@ export default {
     text-align: center;
     font-weight: 600;
     line-height: initial;
-    background: #ffb300;
+    background: #FFC641;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
