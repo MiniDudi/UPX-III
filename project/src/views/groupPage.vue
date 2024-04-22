@@ -1,6 +1,5 @@
 <template>
     <v-col cols="12">
-
         <v-row no-gutters>
             <v-col cols="6" justify="start" align="start">
                 <p class="ml-10 mt-10 text-h2">Group Page</p>
@@ -31,7 +30,7 @@ export default {
     data() {
         return {
             groupHeader: [
-                { title: 'id', align: 'start', key: 'id' },
+                { title: 'Crachá', align: 'start', key: 'id' },
                 { title: 'Nome', align: 'center', key: 'nome' },
                 { title: 'E-mail', align: 'center', key: 'email' },
                 { title: 'Cargo', align: 'center', key: 'cargo' },
@@ -42,6 +41,12 @@ export default {
     computed: {
 
     },
+    created() {
+
+    },
+    methods: {
+
+    }
 }
 </script>
 
