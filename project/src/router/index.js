@@ -48,7 +48,7 @@ const routes = [
       {
         path: '/register',
         name: 'registerPage',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/registerPage.vue'),
       },
     ],
   },
@@ -69,6 +69,36 @@ const routes = [
         path: '/settingsPage',
         name: 'settingsPage',
         component: () => import('@/views/settingsPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/participantRegister',
+    children: [
+      {
+        path: '/participantRegister',
+        name: 'participantRegister',
+        component: () => import('@/views/participantRegister.vue'),
+      },
+    ],
+  },
+  {
+    path: '/donationRegister',
+    children: [
+      {
+        path: '/donationRegister',
+        name: 'donationRegister',
+        component: () => import('@/views/donationRegister.vue'),
+      },
+    ],
+  },
+  {
+    path: '/Donations',
+    children: [
+      {
+        path: '/Donations',
+        name: 'Donations',
+        component: () => import('@/views/Donations.vue'),
       },
     ],
   },

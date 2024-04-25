@@ -17,7 +17,7 @@ class AuthController {
         return;
     }
 
-}
+} 
 
 
 
