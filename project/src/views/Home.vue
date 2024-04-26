@@ -8,7 +8,8 @@
 
     <v-row no-gutters class="mt-10">
       <v-col v-for="item in itens" :key="item" cols="2" style="margin: 20px;" align="center">
-        <v-card width="220" height="300" elevation="7" border="5">
+
+        <v-card @click="onCardClick()" width="220" height="300" elevation="7" border="5">
           <v-avatar color="#FFC641" size="80" class="mt-6" align="center" justify=center>
             <v-avatar color="surface-variant" size="70"><v-img src="@/styles/gato.jpeg"></v-img></v-avatar>
           </v-avatar>
@@ -28,9 +29,20 @@ export default {
   name: 'HomePage',
   data() {
     return {
-      itens: 12,
+      itens: 14,
     }
   },
+  computed() {
+    
+  },
+  created() {
+
+  },
+  methods: {
+    onCardClick() {
+      this.$router.push('/organization')
+    }
+  }
 
 }
 
