@@ -28,7 +28,7 @@ const routes = [
       {
         path: '/organization',
         name: 'organizationPage',
-        component: () => import('@/views/organizationPage.vue'),
+        component: () => import('@/views/organization/organizationPage.vue'),
       },
     ],
   },
@@ -38,7 +38,7 @@ const routes = [
       {
         path: '/group',
         name: 'groupPage',
-        component: () => import('@/views/groupPage.vue'),
+        component: () => import('@/views/group/groupPage.vue'),
       },
     ],
   },
@@ -102,7 +102,16 @@ const routes = [
       },
     ],
   },
-
+  {
+    path: '/donationDetail/:id',
+    children: [
+      {
+        path: '/donationDetail/:id',
+        name: 'donationDetail',
+        component: () => import('@/views/donation/donationDetails.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

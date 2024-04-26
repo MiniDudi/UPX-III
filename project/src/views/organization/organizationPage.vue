@@ -15,6 +15,10 @@ export default {
 
         }
     },
+    computed: {
+    },
+    async created() {
+    }
 }
 
 </script>

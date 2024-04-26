@@ -1,5 +1,9 @@
-class AuthController {
+import BaseController from './baseController';
 
+class AuthController extends BaseController {
+    constructor() {
+        super();
+    }
 
     login(credentials) {
         return credentials;
@@ -10,15 +14,22 @@ class AuthController {
     }
 
     getAllUsers() {
-        return;
+        try {
+            const response = super.query();
+            return response;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     getUserById(id) {
-        return;
+        try {
+            const response = super.getById(id);
+            return response;
+        } catch(e) {
+            console.log(e);
+        }
     }
-
-} 
-
-
+}
 
 export default AuthController;
