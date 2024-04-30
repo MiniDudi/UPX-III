@@ -1,62 +1,82 @@
 <template>
-    <v-row no-gutters align="center" justify="center">
-        <v-col cols="8" align="center">
-            <!-- Título Centralizado -->
-            <div class="page-title">Cadastro de Doação</div>
-
-            <!-- Formulário de Cadastro -->
-            <v-form @submit.prevent="registerDonation">
-                <!-- Campos de Dados -->
-                <v-list dense>
-                    <v-list-item>
-                        <v-text-field v-model="description" label="Descrição" prepend-icon="mdi-package-variant" variant="underlined" />
-                    </v-list-item>
-                    <v-list-item>
-                        <v-text-field v-model="quantity" label="Quantidade" prepend-icon="mdi-counter" variant="underlined" />
-                    </v-list-item>
-                    <v-list-item>
-                        <v-text-field v-model="condition" label="Condição" prepend-icon="mdi-tag" variant="underlined" />
-                    </v-list-item>
-                </v-list>
-
-                <!-- Botão de Cadastro -->
-                <v-btn type="submit" color="#FFC641" class="mt-3">Cadastrar Doação</v-btn>
-            </v-form>
-        </v-col>
-    </v-row>
+    <v-col cols="12">
+        <v-row no-gutters>
+            <v-col cols="6" justify="start" align="start">
+                <p class="ml-10 mt-10 text-h2">Cadastro de Doação</p>
+            </v-col>
+            <v-col cols="10" justify="end" align="center">
+                <!-- Botão de Adicionar Doação -->
+                <DonationModal ref="donationModal" />
+                <!-- Botão de Eidtar Doação -->
+                <DonationModal ref="donationModal" />
+                <!-- Botão de Excluir Doação -->
+                <DonationModal ref="donationModal" />
+            </v-col>
+        </v-row>
+        <v-row no-gutters align="center" justify="center" class="mt-15">
+            <v-col cols="12" align="center" justify="center">
+                <v-card class="ml-10 mr-10" height="460" elevation="3">
+                    <v-data-table-virtual class="table" :headers="donationHeaders" item-value="description" fixed-header>
+                    </v-data-table-virtual>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-col>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { collection, getDocs } from 'firebase/firestore';
+import DonationModal from '@/components/donationModal.vue';
 import { db } from '../firebase/index';
-import { collection, addDoc } from 'firebase/firestore';
 
 export default {
     name: 'DonationRegister',
+    components: {
+        DonationModal,
+    },
     data() {
         return {
-            description: '',
-            quantity: '',
-            condition: ''
+            donations: [],
+            selectedDonation: null,
+            donationHeaders: [
+                { title: 'Descrição', key: 'description' },
+                { title: 'Quantidade', key: 'quantity' },
+                { title: 'Condição', key: 'condition' },
+            ]
         };
     },
-
     methods: {
-        async registerDonation() {
+        async fetchDonations() {
             try {
-                const donation = {
-                    description: this.description,
-                    quantity: this.quantity,
-                    condition: this.condition
-                };
-                await addDoc(collection(db, 'donations'), donation);
-                // Implementar lógica para lidar com sucesso ou erro.
+                const querySnapshot = await getDocs(collection(db, 'donations'));
+                this.donations = [];
+                querySnapshot.forEach((doc) => {
+                    this.donations.push({ id: doc.id, ...doc.data() });
+                });
             } catch (error) {
-                console.error("Erro ao cadastrar doação: ", error);
+                console.error("Erro ao buscar doações: ", error);
             }
-        }
-    }
-};
+        },
+        openModal(mode, donation = null) {
+            const modal = this.$refs.donationModal;
+            modal.openModal(mode, donation);
+        },
+        editSelectedDonation() {
+            if (this.selectedDonation) {
+                this.openModal('edit', this.selectedDonation);
+            }
+        },
+        deleteSelectedDonation() {
+            if (this.selectedDonation) {
+                this.openModal('delete', this.selectedDonation);
+            }
+        },
+    },
+    async mounted() {
+        await this.fetchDonations();
+    },
+}
 </script>
 
 <style scoped>
@@ -65,5 +85,9 @@ export default {
     font-size: 38px;
     font-weight: 600;
     text-align: center;
+    margin-bottom: 15px;
+}
+.table {
+    padding: 5px 20px;
 }
 </style>
