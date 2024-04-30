@@ -1,77 +1,76 @@
 <template>
-    <v-row no-gutters align="center" justify="center">
-        <v-col cols="8" align="center">
-            <!-- Título Centralizado -->
-            <div class="page-title">Cadastro de Participantes</div>
-
-            <!-- Formulário de Cadastro -->
-            <v-form @submit.prevent="registerParticipant">
-                <!-- Campos de Dados -->
-                <v-list dense>
-                    <v-list-item>
-                        <v-text-field v-model="name" label="Nome" prepend-icon="mdi-account" variant="underlined" />
-                    </v-list-item>
-                    <v-list-item>
-                        <v-text-field v-model="email" label="Email" prepend-icon="mdi-email" variant="underlined" />
-                    </v-list-item>
-                    <v-list-item>
-                        <v-text-field v-model="phone" label="Telefone" prepend-icon="mdi-phone" variant="underlined" />
-                    </v-list-item>
-
-                    <!-- Checkbox para identificar se é Doador ou Receptor -->
-                    <v-list-item>
-                        <v-checkbox v-model="isDonor" label="Doador" />
-                        <v-checkbox v-model="isReceptor" label="Receptor" />
-                    </v-list-item>
-                </v-list>
-
-                <!-- Botão de Cadastro -->
-                <v-btn type="submit" color="#FFC641" class="mt-3">Cadastrar Participante</v-btn>
-            </v-form>
-        </v-col>
-    </v-row>
+    <v-col cols="12">
+        <v-row no-gutters>
+            <v-col cols="6" justify="start" align="start">
+                <p class="ml-10 mt-10 text-h2">Cadastro de Participantes</p>
+            </v-col>
+            <v-col cols="3" justify="end" align="end">
+                <!-- Botões -->
+                <ParticipantModal ref="participantModal" />
+                <ParticipantModal ref="participantModal" />
+                <ParticipantModal ref="participantModal" />
+            </v-col>
+        </v-row>
+        <v-row no-gutters align="center" justify="center" class="mt-15">
+            <v-col cols="12" align="center" justify="center">
+                <v-card class="ml-10 mr-10" height="460" elevation="3">
+                    <v-data-table-virtual class="table" :headers="participantHeaders">
+                    </v-data-table-virtual>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-col>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { collection, getDocs } from 'firebase/firestore';
+import ParticipantModal from '@/components/participantModal.vue';
 import { db } from '../firebase/index';
-import { collection, addDoc } from "firebase/firestore";
 
 export default {
     name: 'ParticipantRegister',
+    components: {
+        ParticipantModal,
+    },
     data() {
         return {
-            name: '',
-            email: '',
-            phone: '',
-            isDonor: false
+            participants: [],
+            selectedParticipant: null,
+            participantHeaders: [
+                { title: 'Nome', key: 'name' },
+                { title: 'Email', key: 'email' },
+                { title: 'Telefone', key: 'phone' },
+                { title: 'Ações', key: 'actions' }
+            ]
         };
     },
-
     methods: {
-        async registerParticipant() {
+        async fetchParticipants() {
             try {
-                const participant = {
-                    name: this.name,
-                    email: this.email,
-                    phone: this.phone,
-                    isDonor: this.isDonor
-                };
-                await addDoc(collection(db, 'participants'), participant);
-                // Adicione lógica para lidar com sucesso ou erro.
+                const querySnapshot = await getDocs(collection(db, 'participants'));
+                this.participants = [];
+                querySnapshot.forEach((doc) => {
+                    this.participants.push({ id: doc.id, ...doc.data() });
+                });
             } catch (error) {
-                console.error("Erro ao cadastrar participante: ", error);
+                console.error("Erro ao buscar participantes: ", error);
             }
-        }
-    }
+        },
+        selectParticipant(participant) {
+            this.selectedParticipant = participant;
+        },
+        openModal(mode, participant = null) {
+            const modal = this.$refs.participantModal;
+            modal.openModal(mode, participant);
+        },
+    },
+    async mounted() {
+        await this.fetchParticipants();
+    },
 }
 </script>
 
 <style scoped>
-.page-title {
-    font-family: "Rubik", sans-serif;
-    font-size: 38px;
-    font-weight: 600;
-    text-align: center;
-}
+/* Adicione seus estilos aqui se necessário */
 </style>
