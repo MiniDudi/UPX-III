@@ -1,61 +1,64 @@
 <template>
     <v-col cols="12">
         <v-row no-gutters>
-            <v-col cols="12" justify="start" align="start">
-                <p class="ml-10 mt-10 text-h2">Link Page</p>
-            </v-col>
-
-            <v-col cols="5">
-                <v-row no-gutters align="center" justify="center" class="mt-15">
-                    <v-col cols="12" align="center" justify="center">
-                        <v-card class="ml-10 mr-10" height="460" elevation="3">
-                            <v-row no-gutters align="center" justify="start">
-                                <v-col cols="6">
-                                    <p class="text-h5">Donations</p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <v-text-field v-model="searchTerm1" label="Search" class="mx-4 mt-4 shrink"
-                                        variant="solo-filled" prepend-inner-icon="mdi-magnify" />
-                                </v-col>
-                            </v-row>
-                            <v-row no-gutters>
-                                <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
-                                    fixed-header :items="filteredDonations1">
-                                </v-data-table-virtual>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-col>
-            <v-col cols="2" align="center" justify="center">
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <v-btn color="#FFC641"><v-icon>mdi-relation-one-to-one</v-icon></v-btn>
-                    </v-col>
-                </v-row>
-            </v-col>
-            <v-col cols="5">
-                <v-row no-gutters align="center" justify="center" class="mt-15">
-                    <v-col cols="12" align="center" justify="center">
-                        <v-card class="ml-10 mr-10" height="460" elevation="3">
-                            <v-row no-gutters align="center" justify="start">
-                                <v-col cols="6">
-                                    <p class="text-h5">Paticipants</p>
-                                </v-col>
-                                <v-col cols="6">
-                                    <v-text-field v-model="searchTerm2" label="Search" class="mx-4 mt-4 shrink"
-                                        variant="solo-filled" prepend-inner-icon="mdi-magnify" />
-                                </v-col>
-                            </v-row>
-                            <v-row no-gutters>
-                                <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
-                                    fixed-header :items="filteredDonations2">
-                                </v-data-table-virtual>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-col>
+            <v-row>
+                <v-col cols="12" justify="start" align="start">
+                    <p class="ml-10 mt-10 text-h2">Link Page</p>
+                </v-col>
+            </v-row>
+            <v-row no-gutters align="center" justify="center">
+                <v-col cols="5">
+                    <v-row no-gutters align="center" justify="center" class="mt-15">
+                        <v-col cols="12" align="center" justify="center">
+                            <v-card class="ml-10 mr-10" height="460" elevation="3">
+                                <v-row no-gutters align="center" justify="start">
+                                    <v-col cols="6">
+                                        <p class="text-h5">Donations</p>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="searchTerm1" label="Search" class="mx-4 mt-4 shrink"
+                                            variant="solo-filled" prepend-inner-icon="mdi-magnify" />
+                                    </v-col>
+                                </v-row>
+                                <v-row no-gutters>
+                                    <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
+                                        fixed-header :items="filteredDonations1" @click:row="syncDonation">
+                                    </v-data-table-virtual>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <v-col cols="1" align="center" justify="center">
+                    <v-row no-gutters>
+                        <v-col cols="12">
+                            <v-btn color="#FFC641"><v-icon>mdi-relation-one-to-one</v-icon></v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <v-col cols="5">
+                    <v-row no-gutters align="center" justify="center" class="mt-15">
+                        <v-col cols="12" align="center" justify="center">
+                            <v-card class="ml-10 mr-10" height="460" elevation="3">
+                                <v-row no-gutters align="center" justify="start">
+                                    <v-col cols="6">
+                                        <p class="text-h5">Paticipants</p>
+                                    </v-col>
+                                    <v-col cols="6">
+                                        <v-text-field v-model="searchTerm2" label="Search" class="mx-4 mt-4 shrink"
+                                            variant="solo-filled" prepend-inner-icon="mdi-magnify" />
+                                    </v-col>
+                                </v-row>
+                                <v-row no-gutters>
+                                    <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
+                                        fixed-header :items="filteredDonations2" @click:row="selectedParticipant = item">
+                                    </v-data-table-virtual>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
         </v-row>
     </v-col>
 </template>
@@ -88,8 +91,11 @@ export default {
             selectedParticipant: null,
             searchTerm1: '',
             searchTerm2: '',
-            search: '',
         };
+    },
+
+    mounted() {
+        this.loadDonationsAndParticipants();
     },
 
     computed: {
@@ -140,12 +146,17 @@ export default {
             } catch (error) {
                 console.error("Erro ao vincular doação a participante: ", error);
             }
-        }
-    },
+        },
 
-    mounted() {
-        this.loadDonationsAndParticipants();
-    }
+        syncDonation(event) {
+            this.selectDonation = event.item;
+        },
+
+        syncParticipant(event) {
+            this.selectedParticipant = event.item;
+        },
+
+    },
 };
 </script>
 
