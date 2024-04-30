@@ -1,37 +1,67 @@
 <template>
-    <v-row no-gutters align="center" justify="center" style="margin: 10px;">
-        <v-col cols="12" align="center">
-            <!-- Título Centralizado e Descendo -->
-            <div class="page-title">Controle de Doações</div>
+    <v-col cols="12">
+        <v-row no-gutters>
+            <v-col cols="12" justify="start" align="start">
+                <p class="ml-10 mt-10 text-h2">Link Page</p>
+            </v-col>
 
-            <!-- Seção de Doações Disponíveis -->
-            <div class="section-title">Doações Disponíveis</div>
-            <v-row dense class="scroll-section" style="elevation: 1;">
-                <v-col v-for="donation in donations" :key="donation.id" cols="12" @click="selectDonation(donation)">
-                    <v-card :color="selectedDonation === donation ? '#FFC641' : '#ffffff'" outlined style="elevation: 1;">
-                        <v-card-title>{{ donation.description }} - Qtd: {{ donation.quantity }} - Condição: {{ donation.condition }}</v-card-title>
-                    </v-card>
-                </v-col>
-            </v-row>
-
-            <!-- Seção de Participantes Disponíveis -->
-            <div class="section-title">Participantes Disponíveis</div>
-            <v-row dense class="scroll-section" style="elevation: 1;">
-                <v-col v-for="participant in participants" :key="participant.id" cols="12" @click="selectParticipant(participant)">
-                    <v-card :color="selectedParticipant === participant ? '#FFC641' : '#ffffff'" outlined style="elevation: 1;">
-                        <v-card-title>{{ participant.name }} - Email: {{ participant.email }} - Tel: {{ participant.phone }}</v-card-title>
-                    </v-card>
-                </v-col>
-            </v-row>
-
-            <!-- Botão de Vínculo -->
-            <v-btn @click="linkDonationToParticipant" color="#FFC641" class="mt-4">Vincular Participante à Doação</v-btn>
-        </v-col>
-    </v-row>
+            <v-col cols="5">
+                <v-row no-gutters align="center" justify="center" class="mt-15">
+                    <v-col cols="12" align="center" justify="center">
+                        <v-card class="ml-10 mr-10" height="460" elevation="3">
+                            <v-row no-gutters align="center" justify="start">
+                                <v-col cols="6">
+                                    <p class="text-h5">Donations</p>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-text-field v-model="searchTerm1" label="Search" class="mx-4 mt-4 shrink"
+                                        variant="solo-filled" prepend-inner-icon="mdi-magnify" />
+                                </v-col>
+                            </v-row>
+                            <v-row no-gutters>
+                                <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
+                                    fixed-header :items="filteredDonations1">
+                                </v-data-table-virtual>
+                            </v-row>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col cols="2" align="center" justify="center">
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <v-btn color="#FFC641"><v-icon>mdi-relation-one-to-one</v-icon></v-btn>
+                    </v-col>
+                </v-row>
+            </v-col>
+            <v-col cols="5">
+                <v-row no-gutters align="center" justify="center" class="mt-15">
+                    <v-col cols="12" align="center" justify="center">
+                        <v-card class="ml-10 mr-10" height="460" elevation="3">
+                            <v-row no-gutters align="center" justify="start">
+                                <v-col cols="6">
+                                    <p class="text-h5">Paticipants</p>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-text-field v-model="searchTerm2" label="Search" class="mx-4 mt-4 shrink"
+                                        variant="solo-filled" prepend-inner-icon="mdi-magnify" />
+                                </v-col>
+                            </v-row>
+                            <v-row no-gutters>
+                                <v-data-table-virtual class="table" :headers="donationHeader" item-value="name"
+                                    fixed-header :items="filteredDonations2">
+                                </v-data-table-virtual>
+                            </v-row>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-col>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { db } from '../firebase/index';
 import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
 
@@ -39,11 +69,41 @@ export default {
     name: 'DonationsPage',
     data() {
         return {
+            donationHeader: [
+                { title: "id", aling: "start", key: "id" },
+                { title: "Title", aling: "center", key: "title" },
+                { title: "Qty.", aling: "center", key: "quantity" },
+                { title: "Conditions", aling: "end", key: "conditions" }
+            ],
+            donationsData: [
+                { id: 1, title: 'Clothes Donation', quantity: 10, conditions: 'New' },
+                { id: 2, title: 'Food Donation', quantity: 20, conditions: 'Non-perishable' },
+                { id: 3, title: 'Book Donation', quantity: 15, conditions: 'Good Condition' },
+                { id: 4, title: 'Toy Donation', quantity: 8, conditions: 'Unused' },
+                { id: 5, title: 'Electronics Donation', quantity: 5, conditions: 'Working' }
+            ],
             donations: [],
             participants: [],
             selectedDonation: null,
             selectedParticipant: null,
+            searchTerm1: '',
+            searchTerm2: '',
+            search: '',
         };
+    },
+
+    computed: {
+        filteredDonations1() {
+            return this.donationsData.filter(donation =>
+                donation.title.toLowerCase().includes(this.searchTerm1.toLowerCase())
+            );
+        },
+
+        filteredDonations2() {
+            return this.donationsData.filter(donation =>
+                donation.title.toLowerCase().includes(this.searchTerm2.toLowerCase())
+            );
+        }
     },
 
     methods: {
@@ -96,7 +156,8 @@ export default {
     font-size: 38px;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 30px; /* Desce um pouco o título */
+    margin-bottom: 30px;
+    /* Desce um pouco o título */
 }
 
 /* Estilo para a seção */
@@ -125,5 +186,4 @@ v-btn {
     margin-top: 20px;
     color: #FFC641;
 }
-
 </style>
