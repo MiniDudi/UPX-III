@@ -16,7 +16,9 @@
 - `src/`:
   - `components/`: Componentes Vue.js utilizados na interface do usuário
   - `models/`: Modelos de dados e lógica de negócios
-  - `routes/`: Rotas e controladores do servidor Node.js
+  - `routes/`: Rotas do servidor Node.js
+  - `controllers/`: Controladores de dados Node.js
+  - `schemas/`: Tabelas do banco de dados Firebase Store
   - `views/`: Visualizações Vue.js
   - `public/`: Arquivos estáticos (imagens, CSS, etc.)
 - `package.json`: Arquivo de configuração do Node.js com dependências do projeto
