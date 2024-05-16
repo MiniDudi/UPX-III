@@ -53,16 +53,6 @@ const routes = [
     ],
   },
   {
-    path: '/userConfig',
-    children: [
-      {
-        path: '/userConfig',
-        name: 'userPage',
-        component: () => import('@/views/userPage.vue'),
-      },
-    ],
-  },
-  {
     path: '/settingsPage',
     children: [
       {

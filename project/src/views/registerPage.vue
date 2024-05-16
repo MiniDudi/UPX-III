@@ -1,133 +1,170 @@
 <template>
-  <v-row no-gutters align="center" justify="center">
-    <!-- Seção do título -->
-    <v-col cols="12" class="title-section">
-      <h2 class="title-text">
-        <span class="text-inscricao">Registro</span> 
-      </h2>
-      <h2 class="subtitle-text">
-        <span class="text-inscricao">de Usuário</span> 
-      </h2>
-    </v-col>
+  <v-row no-gutters align="center">
+      <!-- Seção de imagem e título -->
+      <v-col cols="4" align="center" justify="center">
+          <div ref="imageWrapper" class="melao-icone-wrapper">
+              <v-img class="melao-icone" width="200" alt="Vue logo" src="@/styles/novomelao.png" draggable="false" selectable="false" />
+          </div>
+          
+          <div class="mb-16">
+              <br>
+              <span class="Titles mb-1">Create your</span>
+              <br>
+              <span class="cogniex"> Account</span>
+          </div>
+      </v-col>
 
-    <!-- Seção de preenchimento dos campos -->
-    <v-col cols="6" class="form-section">
-      <form @submit.prevent="submit" class="registration-form">
-        <v-text-field
-          v-model="name.value.value"
-          :counter="10"
-          :error-messages="name.errorMessage.value"
-          label="Name"
-          class="input-field"
-        ></v-text-field>
+      <!-- Seção de preenchimento dos campos -->
+      <v-col cols="8" align="center">
+          <form @submit.prevent="submit" class="registration-form">
+              <v-list-item>
+                  <v-text-field
+                      clearable
+                      v-model="name"
+                      label="Name"
+                      style="color: #000000"
+                      variant="underlined"
+                      class="input-field"
+                  />
+              </v-list-item>
+              <v-list-item>
+                  <v-text-field
+                      clearable
+                      v-model="phone"
+                      label="Phone Number"
+                      style="color: #000000"
+                      variant="underlined"
+                      class="input-field"
+                  />
+              </v-list-item>
+              <v-list-item>
+                  <v-text-field
+                      clearable
+                      v-model="email"
+                      label="Email"
+                      style="color: #000000"
+                      variant="underlined"
+                      class="input-field"
+                  />
+              </v-list-item>
+              <v-list-item>
+                  <v-text-field
+                      clearable
+                      v-model="password"
+                      label="Password"
+                      style="color: #000000"
+                      variant="underlined"
+                      class="input-field"
+                      type="password"
+                  />
+              </v-list-item>
 
-        <v-text-field
-          v-model="phone.value.value"
-          :counter="10"
-          :error-messages="phone.errorMessage.value"
-          label="Phone Number"
-          class="input-field"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="email.value.value"
-          :error-messages="email.errorMessage.value"
-          label="E-mail"
-          class="input-field"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="password.value.value"
-          :error-messages="password.errorMessage.value"
-          label="Password"
-          class="input-field"
-          type="password"
-        ></v-text-field>
-      </form>
-    </v-col>
-
-    <!-- Seção dos botões -->
-    <v-col cols="12" class="button-section" align="center" justify="center">
-      <v-btn @click="submit" elevation="0" color="#FFC641" style="color: #000000;">Inscrever</v-btn>
-      <v-btn @click="handleReset" elevation="0" color="#FFC641" style="color: #000000; margin-left: 10px;">Limpar Dados</v-btn>
-    </v-col>
+              <!-- Seção dos botões -->
+              <v-row no-gutters class="mb-9">
+                  <v-col align="center">
+                      <v-btn @click="submit" elevation="0" rounded="0" color="#FFC641" style="color: #000000; margin-right: 10px;">Submit</v-btn>
+                      <v-btn @click="reset" elevation="0" rounded="0" color="#FFC641" style="color: #000000;">Reset</v-btn>
+                  </v-col>
+              </v-row>
+          </form>
+      </v-col>
   </v-row>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useField, useForm } from 'vee-validate'
+<script>
+import { ref } from 'vue';
+import AuthController from '@/controller/authController';
 
-const { handleSubmit, handleReset } = useForm({
-  validationSchema: {
-    name(value) {
-      if (value?.length >= 2) return true
-      return 'Name needs to be at least 2 characters.'
-    },
-    phone(value) {
-      if (value?.length >= 10 && /[0-9]+/.test(value)) return true
-      return 'Phone number needs to be at least 10 digits.'
-    },
-    email(value) {
-      if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) return true
-      return 'Must be a valid email address.'
-    },
-    password(value) {
-      if (value?.length >= 8) return true
-      return 'Password needs to be at least 8 characters long.'
-    },
+const auth = new AuthController();
+
+export default {
+  name: 'RegisterPage',
+  components: {},
+  setup() {
+      const imageWrapper = ref(null);
+      return { imageWrapper };
   },
-})
+  data() {
+      return {
+          name: '',
+          phone: '',
+          email: '',
+          password: '',
+          imageWrapper: null,
+      }
+  },
 
-const name = useField('name')
-const phone = useField('phone')
-const email = useField('email')
-const password = useField('password')
-
-const submit = handleSubmit(values => {
-  alert(JSON.stringify(values, null, 2))
-})
+  methods: {
+      async submit() {
+          try {
+              if (this.name && this.phone && this.email && this.password) {
+                  const credentials = { name: this.name, phone: this.phone, email: this.email, password: this.password };
+                  await auth.register(credentials);
+                  this.$router.push({ path: '/home' });
+              }
+          } catch (error) {
+              console.log(error);
+          }
+      },
+      reset() {
+          this.name = '';
+          this.phone = '';
+          this.email = '';
+          this.password = '';
+      }
+      
+  }
+}
 </script>
 
 <style scoped>
-.title-section {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.title-text {
+.Titles {
   font-family: "Rubik", sans-serif;
-  font-size: 28px;
+  font-size: 38px;
   font-style: normal;
+  text-align: center;
   font-weight: 600;
+  line-height: initial;
   background: #000000;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.subtitle-text {
+.cogniex {
   font-family: "Rubik", sans-serif;
-  font-size: 28px;
+  font-size: 38px;
   font-style: normal;
+  text-align: center;
   font-weight: 600;
+  line-height: initial;
   background: #FFC641;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.form-section {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  margin: 20px;
+.melao-icone-wrapper {
+  display: inline-block;
+  /* Garante que o wrapper não seja maior que a imagem */
+}
+
+.melao-icone {
+  animation: spin 30s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 .input-field {
-  margin-bottom: 15px; /* Espaçamento ajustado */
+  margin-bottom: 15px;
 }
 
-.button-section {
-  margin-top: 20px;
+.registration-form {
+  margin: 20px; /* Adicionando margem para dar espaço ao redor da forma */
 }
 </style>
