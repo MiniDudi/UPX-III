@@ -10,7 +10,7 @@
         </v-col>
         <v-col cols="4" align="center">
             <div class=" mb-16">
-                <span class="Titles mb-1">Bem vindo a</span>
+                <span class="Titles mb-1">Welcome to</span>
                 <br>
                 <span class="cogniex"> Eco Community</span>
             </div>
@@ -28,7 +28,7 @@
 
             <v-row no-gutters class="mb-9">
                 <v-col align="center">
-                    <v-btn @click="login()" elevation="0" rounded="0" color="#FFC641" style="color: #000000">Entrar</v-btn>
+                    <v-btn @click="login()" elevation="0" rounded="0" color="#FFC641" style="color: #000000">Login</v-btn>
                 </v-col>
             </v-row>
 
