@@ -14,10 +14,10 @@ const firebaseConfig = {
     measurementId: "G-5CGV6NY6DC"
 }
 
-const firebaseApp = initializeApp(firebaseConfig)
-const auth = getAuth(firebaseApp)
-const db = getFirestore(firebaseApp)
-const analytics = getAnalytics(firebaseApp)
+const App = initializeApp(firebaseConfig)
+const auth = getAuth(App)
+const db = getFirestore(App)
+const analytics = getAnalytics(App)
 
 // connectFirestoreEmulator(db, 'localhost', 8081)
 // connectAuthEmulator(auth, 'http://localhost:9099')
