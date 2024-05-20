@@ -43,7 +43,7 @@
             <v-divider></v-divider>
 
             <!-- Item da Organização -->
-            <v-list-item to="/organization" height="70" class="mb-3 mt-3" color="#ffb300" draggable="false">
+            <v-list-item to="/about" height="70" class="mb-3 mt-3" color="#ffb300" draggable="false">
                 <v-list-item-icon><v-icon>mdi-information-outline</v-icon></v-list-item-icon>
                 <v-list-item-content><v-list-item-title>About</v-list-item-title></v-list-item-content>
             </v-list-item>

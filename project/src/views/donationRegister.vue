@@ -25,15 +25,15 @@
             </v-col>
         </v-row>
     </v-col>
-</template>
-
-<script>
-import { ref, onMounted } from 'vue';
-import { collection, getDocs } from 'firebase/firestore';
-import DonationModal from '@/components/donationModal.vue';
-import { db } from '../firebase/index';
-
-export default {
+  </template>
+  
+  <script>
+  import { ref, onMounted } from 'vue';
+  import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+  import DonationModal from '@/components/donationModal.vue';
+  import { db } from '../firebase/index';
+  
+  export default {
     name: 'DonationRegister',
     components: {
         DonationModal,
@@ -43,6 +43,7 @@ export default {
             donations: [],
             selectedDonation: null,
             donationHeaders: [
+                { title: 'id', key: 'id' },
                 { title: 'Descrição', align: "center", key: 'description' },
                 { title: 'Quantidade', align: "center", key: 'quantity' },
                 { title: 'Condição', align: "center", key: 'condition' },

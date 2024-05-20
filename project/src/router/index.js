@@ -23,12 +23,12 @@ const routes = [
     ],
   },
   {
-    path: '/organization',
+    path: '/about',
     children: [
       {
-        path: '/organization',
-        name: 'organizationPage',
-        component: () => import('@/views/organization/organizationPage.vue'),
+        path: '/about',
+        name: 'aboutPage',
+        component: () => import('@/views/About.vue'),
       },
     ],
   },

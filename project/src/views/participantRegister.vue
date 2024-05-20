@@ -15,7 +15,8 @@
                         :items="participantData">
                         <template v-slot:item.actions="{ item }">
                             <v-row no-gutter justify="start" align="center">
-                                <v-btn @click="deleteItem(item)" color="blue" class="mr-3"><v-icon>mdi-pencil</v-icon></v-btn>
+                                <v-btn @click="deleteItem(item)" color="blue"
+                                    class="mr-3"><v-icon>mdi-pencil</v-icon></v-btn>
                                 <v-btn @click="deleteItem(item)" color="red"><v-icon>mdi-trash-can</v-icon></v-btn>
                             </v-row>
                         </template>
@@ -42,17 +43,18 @@ export default {
             participants: [],
             selectedParticipant: null,
             participantHeaders: [
+                { title: 'id', key: 'id' },
                 { title: 'Nome', key: 'name' },
                 { title: 'Email', key: 'email' },
                 { title: 'Telefone', key: 'phone' },
                 { title: '', align: "center", key: 'actions', width: '20%' }
             ],
             participantData: [
-                { name: 'João Silva', email: 'joao@example.com', phone: '123456789', actions: null },
-                { name: 'Maria Souza', email: 'maria@example.com', phone: '987654321', actions: null },
-                { name: 'Carlos Oliveira', email: 'carlos@example.com', phone: '555666777', actions: null },
-                { name: 'Ana Santos', email: 'ana@example.com', phone: '111222333', actions: null },
-                { name: 'Pedro Almeida', email: 'pedro@example.com', phone: '999888777', actions: null }
+                { id: '1', name: 'João Silva', email: 'joao@example.com', phone: '123456789', actions: null },
+                { id: '2', name: 'Maria Souza', email: 'maria@example.com', phone: '987654321', actions: null },
+                { id: '3', name: 'Carlos Oliveira', email: 'carlos@example.com', phone: '555666777', actions: null },
+                { id: '4', name: 'Ana Santos', email: 'ana@example.com', phone: '111222333', actions: null },
+                { id: '5', name: 'Pedro Almeida', email: 'pedro@example.com', phone: '999888777', actions: null }
             ]
         };
     },
