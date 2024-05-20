@@ -155,7 +155,6 @@ export default {
 
 .section-image {
     border-radius: 10px;
-    elevation: 3;
     /* Adiciona elevação à imagem */
 }
 </style>

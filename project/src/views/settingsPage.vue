@@ -31,7 +31,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="5" align="center">
+            <v-col cols="5" align="center" justify="center">
                 <v-card elevation="3" class="avatar-card" align="center" justify="center" :style="{ height: `${card1Height}px` }">
                     <v-card-title class="section-title">Profile Picture</v-card-title>
                     <v-col cols="12">
