@@ -2,14 +2,14 @@
     <v-col cols="12">
         <v-row no-gutter>
             <v-col cols="12">
-                <p class="ml-10 mt-10 text-h2">Donation "{{  }}" Detail</p>
+                <p class="ml-10 mt-10 text-h2">Participants "{{  }}" Detail</p>
             </v-col>
         </v-row>
     </v-col>
 </template>
 <script>
 export default {
-    name: 'DontationDetails',
+    name: 'ParticipantDetails',
     data() {
         return {
 
@@ -29,11 +29,11 @@ export default {
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const donationsCollection = collection(db, "donations");
+const participantsCollection = collection(db, "participants");
 
-export const addDonation = async (donation) => {
+export const addDonation = async (participants) => {
   try {
-    const docRef = await addDoc(donationsCollection, donation);
+    const docRef = await addDoc(participantsCollection, participants);
     console.log("Document written with ID: ", docRef.id);
     return docRef.id;
   } catch (e) {

@@ -1,3 +1,4 @@
+
 <template>
     <v-col cols="12">
         <v-row no-gutters>
@@ -40,7 +41,7 @@
   export default {
     name: 'DonationRegister',
     components: {
-        DonationModal,
+      DonationModal,
     },
     data() {
         return {
@@ -94,21 +95,22 @@
         }
     },
     async mounted() {
-        await this.fetchDonations();
+      await this.fetchDonations();
     },
-}
-</script>
-
-<style scoped>
-.page-title {
+  }
+  </script>
+  
+  <style scoped>
+  .page-title {
     font-family: 'Rubik', sans-serif;
     font-size: 38px;
     font-weight: 600;
     text-align: center;
     margin-bottom: 15px;
-}
-
-.table {
+  }
+  
+  .table {
     padding: 5px 20px;
-}
-</style>
+  }
+  </style>
+  
