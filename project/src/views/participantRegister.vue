@@ -45,13 +45,21 @@ export default {
   data() {
     return {
       participants: [],
+      selectedParticipant: null,
       participantHeaders: [
-        { title: 'Nome', align: "center", key: 'nome' },
-        { title: 'Email', align: "center", key: 'email' },
-        { title: 'Telefone', align: "center", key: 'telefone' },
-        { title: 'Status', align: "center", key: 'status' },
-        { title: '', key: 'actions', width: "20%" }
+        { title: 'id', key: 'id' },
+        { title: 'Nome', key: 'name' },
+        { title: 'Email', key: 'email' },
+        { title: 'Telefone', key: 'phone' },
+        { title: '', align: "center", key: 'actions', width: '20%' }
       ],
+      participantData: [
+        { id: '1', name: 'João Silva', email: 'joao@example.com', phone: '123456789', actions: null },
+        { id: '2', name: 'Maria Souza', email: 'maria@example.com', phone: '987654321', actions: null },
+        { id: '3', name: 'Carlos Oliveira', email: 'carlos@example.com', phone: '555666777', actions: null },
+        { id: '4', name: 'Ana Santos', email: 'ana@example.com', phone: '111222333', actions: null },
+        { id: '5', name: 'Pedro Almeida', email: 'pedro@example.com', phone: '999888777', actions: null }
+      ]
     };
   },
   methods: {
@@ -66,65 +74,32 @@ export default {
         console.error("Erro ao buscar os participantes: ", error);
       }
     },
-    data() {
-      return {
-        participants: [],
-        selectedParticipant: null,
-        participantHeaders: [
-          { title: 'id', key: 'id' },
-          { title: 'Nome', key: 'name' },
-          { title: 'Email', key: 'email' },
-          { title: 'Telefone', key: 'phone' },
-          { title: '', align: "center", key: 'actions', width: '20%' }
-        ],
-        participantData: [
-          { id: '1', name: 'João Silva', email: 'joao@example.com', phone: '123456789', actions: null },
-          { id: '2', name: 'Maria Souza', email: 'maria@example.com', phone: '987654321', actions: null },
-          { id: '3', name: 'Carlos Oliveira', email: 'carlos@example.com', phone: '555666777', actions: null },
-          { id: '4', name: 'Ana Santos', email: 'ana@example.com', phone: '111222333', actions: null },
-          { id: '5', name: 'Pedro Almeida', email: 'pedro@example.com', phone: '999888777', actions: null }
-        ]
-      };
+    selectParticipant(participant) {
+      this.selectedParticipant = participant;
     },
-    methods: {
-      async fetchParticipants() {
-        try {
-          const querySnapshot = await getDocs(collection(db, 'participants'));
-          this.participants = [];
-          querySnapshot.forEach((doc) => {
-            this.participants.push({ id: doc.id, ...doc.data() });
-          });
-        } catch (error) {
-          console.error("Erro ao buscar participantes: ", error);
-        }
-      },
-      selectParticipant(participant) {
-        this.selectedParticipant = participant;
-      },
-      openModal(mode, participant = null) {
-        const modal = this.$refs.participantModal;
-        modal.openModal(mode, participant);
-      },
-      newParticipant() {
-        this.$router.push('/participant/create')
-      },
-      async deleteParticipant(id) {
-        try {
-          await deleteDoc(doc(db, 'participants', id));
-          this.fetchParticipants();
-        } catch (error) {
-          console.error("Erro ao deletar o participante: ", error);
-        }
-      },
-      editParticipant(participant) {
-        this.$refs.participantModal.openModal('edit', participant);
-      },
+    openModal(mode, participant = null) {
+      const modal = this.$refs.participantModal;
+      modal.openModal(mode, participant);
     },
-    async mounted() {
-      await this.fetchParticipants();
+    newParticipant() {
+      this.$router.push('/participant/create')
+    },
+    async deleteParticipant(id) {
+      try {
+        await deleteDoc(doc(db, 'participants', id));
+        this.fetchParticipants();
+      } catch (error) {
+        console.error("Erro ao deletar o participante: ", error);
+      }
+    },
+    editParticipant(participant) {
+      this.$refs.participantModal.openModal('edit', participant);
+    },
+  },
+  async mounted() {
+    await this.fetchParticipants();
 
-    },
-  }
+  },
 }
 </script>
 
