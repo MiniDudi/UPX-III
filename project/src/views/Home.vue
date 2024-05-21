@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     onCardClick() {
-      this.$router.push('/organization')
+      this.$router.push('/participantRegister')
     }
   }
 

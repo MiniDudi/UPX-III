@@ -4,8 +4,12 @@
             <v-col cols="6" justify="start" align="start">
                 <p class="ml-10 mt-10 text-h2">Group Page</p>
             </v-col>
-            <v-col cols="6" justify="end" align="end">
+            <!-- <v-col cols="6" justify="end" align="end">
                 <MemberModal />
+            </v-col> -->
+            <v-col cols="6" justify="end" align="end">
+                <v-btn class="mr-10 mt-15" v-bind="activatorProps" text="Add Member" elevation="0"
+                    color="#FFC641" @click="newMember()"></v-btn>
             </v-col>
         </v-row>
         <v-row no-gutters align="center" justify="center" class="mt-15">
@@ -37,7 +41,6 @@ export default {
                 { title: 'Crachá', align: 'start', key: 'id' },
                 { title: 'Nome', align: 'center', key: 'name' },
                 { title: 'E-mail', align: 'center', key: 'email' },
-                { title: 'Cargo', align: 'center', key: 'position' },
                 { title: '', align: 'center', key: 'actions' },
             ],
             groupData: [
@@ -56,6 +59,9 @@ export default {
 
     },
     methods: {
+        newMember() {
+            this.$router.push('/member/create')
+        },
         deleteItem(item) {
         },
     }

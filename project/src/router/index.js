@@ -23,12 +23,12 @@ const routes = [
     ],
   },
   {
-    path: '/organization',
+    path: '/about',
     children: [
       {
-        path: '/organization',
-        name: 'organizationPage',
-        component: () => import('@/views/organization/organizationPage.vue'),
+        path: '/about',
+        name: 'aboutPage',
+        component: () => import('@/views/About.vue'),
       },
     ],
   },
@@ -99,6 +99,36 @@ const routes = [
         path: '/donationDetail/:id',
         name: 'donationDetail',
         component: () => import('@/views/donation/donationDetails.vue'),
+      },
+    ],
+  },
+  {
+    path: '/participant/create',
+    children: [
+      {
+        path: '/participant/create',
+        name: 'participantCreate',
+        component: () => import('@/views/participant/newParticipant.vue'),
+      },
+    ],
+  },
+  {
+    path: '/donation/create',
+    children: [
+      {
+        path: '/donation/create',
+        name: 'donationCreate',
+        component: () => import('@/views/donation/newDonation.vue'),
+      },
+    ],
+  },
+  {
+    path: '/member/create',
+    children: [
+      {
+        path: '/member/create',
+        name: 'memeberCreate',
+        component: () => import('@/views/group/newMember.vue'),
       },
     ],
   },

@@ -49,7 +49,6 @@ import AuthController from '@/controller/authController';
 
 const auth = new AuthController();
 
-
 export default {
     name: 'LoginPage',
     components: {},
