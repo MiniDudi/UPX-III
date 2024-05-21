@@ -4,11 +4,13 @@
             <v-col cols="12">
                 <p class="ml-10 mt-10 text-h2">Link Page</p>
             </v-col>
-            <v-row no-gutters align="center" justify="center">
-                <v-col cols="5">
-                    <v-row no-gutters align="center" justify="center" class="mt-15">
-                        <v-col cols="12" align="center" justify="center">
-                            <v-card class="ml-10 mr-10" height="460" elevation="3">
+        </v-row>
+        <v-row no-gutters align="center" justify="center" class="mt-15">
+            <v-col cols="12">
+                <v-card elevation="3" class="ml-10 mr-10">
+                    <v-row no-gutters align="center" justify="center">
+                        <v-col cols="5">
+                            <v-col cols="12" align="center" justify="center">
                                 <v-row no-gutters align="center" justify="start">
                                     <v-col cols="6">
                                         <p class="text-h5">Donations</p>
@@ -23,24 +25,20 @@
                                         fixed-header :items="filteredDonations1" @click:row="syncDonation">
                                     </v-data-table-virtual>
                                 </v-row>
-                            </v-card>
+                            </v-col>
                         </v-col>
-                    </v-row>
-                </v-col>
-                <v-col cols="2" align="center" justify="center" class="">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <v-btn color="#FFC641"><v-icon>mdi-relation-one-to-one</v-icon></v-btn>
+                        <v-col cols="2" align="center" justify="center" class="">
+                            <v-row no-gutters>
+                                <v-col cols="12">
+                                    <v-btn color="#FFC641"><v-icon>mdi-relation-one-to-one</v-icon></v-btn>
+                                </v-col>
+                            </v-row>
                         </v-col>
-                    </v-row>
-                </v-col>
-                <v-col cols="5">
-                    <v-row no-gutters align="center" justify="center" class="mt-15">
-                        <v-col cols="12" align="center" justify="center">
-                            <v-card class="ml-10 mr-10" height="460" elevation="3">
+                        <v-col cols="5">
+                            <v-col cols="12" align="center" justify="center">
                                 <v-row no-gutters align="center" justify="start">
                                     <v-col cols="6">
-                                        <p class="text-h5">Paticipants</p>
+                                        <p class="text-h5">Participants</p>
                                     </v-col>
                                     <v-col cols="6">
                                         <v-text-field v-model="searchTerm2" label="Search" class="mx-4 mt-4 shrink"
@@ -53,12 +51,13 @@
                                         @click:row="selectedParticipant = item">
                                     </v-data-table-virtual>
                                 </v-row>
-                            </v-card>
+                            </v-col>
                         </v-col>
                     </v-row>
-                </v-col>
-            </v-row>
+                </v-card>
+            </v-col>
         </v-row>
+
     </v-col>
 </template>
 

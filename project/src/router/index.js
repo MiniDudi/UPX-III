@@ -102,6 +102,36 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/participant/create',
+    children: [
+      {
+        path: '/participant/create',
+        name: 'participantCreate',
+        component: () => import('@/views/participant/newParticipant.vue'),
+      },
+    ],
+  },
+  {
+    path: '/donation/create',
+    children: [
+      {
+        path: '/donation/create',
+        name: 'donationCreate',
+        component: () => import('@/views/donation/newDonation.vue'),
+      },
+    ],
+  },
+  {
+    path: '/member/create',
+    children: [
+      {
+        path: '/member/create',
+        name: 'memeberCreate',
+        component: () => import('@/views/group/newMember.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

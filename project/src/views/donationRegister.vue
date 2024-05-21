@@ -4,8 +4,12 @@
             <v-col cols="6" justify="start" align="start">
                 <p class="ml-10 mt-10 text-h2">Donation Page</p>
             </v-col>
-            <v-col cols="6" justify="end" align="end">
+            <!-- <v-col cols="6" justify="end" align="end">
                 <DonationModal />
+            </v-col> -->
+            <v-col cols="6" justify="end" align="end">
+                <v-btn class="mr-10 mt-15" v-bind="activatorProps" text="Add Donation" elevation="0"
+                    color="#FFC641" @click="newDonation()"></v-btn>
             </v-col>
         </v-row>
         <v-row no-gutters align="center" justify="center" class="mt-15">
@@ -85,6 +89,9 @@
                 this.openModal('delete', this.selectedDonation);
             }
         },
+        newDonation() {
+            this.$router.push('/donation/create');
+        }
     },
     async mounted() {
         await this.fetchDonations();
