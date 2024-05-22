@@ -16,7 +16,7 @@
                                 <div class="text-subtitle-1 text-medium-emphasis">Participant Name</div>
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
-                                <v-text-field v-model="participantEmail" label="Name" outlined
+                                <v-text-field v-model="participantName" label="Name" outlined
                                     prepend-icon="mdi-account"></v-text-field></v-row>
                         </v-col>
                     </v-row>
@@ -26,7 +26,7 @@
                                 <div class="text-subtitle-1 text-medium-emphasis">Participant E-mail</div>
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
-                                <v-text-field v-model="participantName" label="E-mail" outlined
+                                <v-text-field v-model="participantEmail" label="E-mail" outlined
                                     prepend-icon="mdi-email"></v-text-field></v-row>
                         </v-col>
                         <v-col cols="6">
