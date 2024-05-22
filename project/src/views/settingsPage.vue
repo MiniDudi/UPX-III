@@ -11,10 +11,10 @@
         </v-row>
         <v-row no-gutters align="center" justify="center" class="mt-15">
             <v-col cols="7">
-                <v-card elevation="3" class="info-card ml-10 mr-10" id="card1" align="center" justify="center" ref="card1">
+                <v-card elevation="3" class="info-card ml-10 mr-10" id="card1" align="center" justify="center" ref="card1" height="300">
                     <v-card-title class="section-title">User Information</v-card-title>
                     <v-card-text align="center" justify="center">
-                        <v-row no-gutters>
+                        <v-row no-gutters align="center" justify="center">
                             <v-col cols="12">
                                 <v-text-field v-model="email" label="Email" clearable outlined
                                     prepend-icon="mdi-email" />
@@ -25,14 +25,14 @@
                             </v-col>
                         </v-row>
                         <v-row no-gutters align="center" justify="center">
-                            <v-btn class="mb-1 mt-1" elevation="3" color="green">Salvar</v-btn>
+                            <v-btn elevation="3" rounded="0" color="green">Salvar</v-btn>
                         </v-row>
                     </v-card-text>
                 </v-card>
             </v-col>
 
             <v-col cols="5" align="center" justify="center">
-                <v-card elevation="3" class="avatar-card" align="center" justify="center" :style="{ height: `${card1Height}px` }">
+                <v-card elevation="3" class="avatar-card" align="center" justify="center" height="300">
                     <v-card-title class="section-title">Profile Picture</v-card-title>
                     <v-col cols="12">
                         <v-row no-gutters align="center" justify="center">
