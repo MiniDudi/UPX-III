@@ -13,6 +13,16 @@ const routes = [
     ],
   },
   {
+    path: '/register',
+    children: [
+      {
+        path: '/register',
+        name: 'registerPage',
+        component: () => import('@/views/registerPage.vue'),
+      },
+    ],
+  },
+  {
     path: '/home',
     children: [
       {
@@ -33,26 +43,6 @@ const routes = [
     ],
   },
   {
-    path: '/group',
-    children: [
-      {
-        path: '/group',
-        name: 'groupPage',
-        component: () => import('@/views/group/groupPage.vue'),
-      },
-    ],
-  },
-  {
-    path: '/register',
-    children: [
-      {
-        path: '/register',
-        name: 'registerPage',
-        component: () => import('@/views/registerPage.vue'),
-      },
-    ],
-  },
-  {
     path: '/settingsPage',
     children: [
       {
@@ -63,42 +53,32 @@ const routes = [
     ],
   },
   {
-    path: '/participantRegister',
+    path: '/members',
     children: [
       {
-        path: '/participantRegister',
-        name: 'participantRegister',
-        component: () => import('@/views/participantRegister.vue'),
+        path: '/members',
+        name: 'members',
+        component: () => import('@/views/member/memberPage.vue'),
       },
     ],
   },
   {
-    path: '/donationRegister',
+    path: '/members/create',
     children: [
       {
-        path: '/donationRegister',
-        name: 'donationRegister',
-        component: () => import('@/views/donationRegister.vue'),
+        path: '/members/create',
+        name: 'memeberCreate',
+        component: () => import('@/views/member/newMember.vue'),
       },
     ],
   },
   {
-    path: '/Donations',
+    path: '/participants',
     children: [
       {
-        path: '/Donations',
-        name: 'Donations',
-        component: () => import('@/views/Donations.vue'),
-      },
-    ],
-  },
-  {
-    path: '/donationDetail/:id',
-    children: [
-      {
-        path: '/donationDetail/:id',
-        name: 'donationDetail',
-        component: () => import('@/views/donation/donationDetails.vue'),
+        path: '/participants',
+        name: 'participants',
+        component: () => import('@/views/participant/participantPage.vue'),
       },
     ],
   },
@@ -113,6 +93,36 @@ const routes = [
     ],
   },
   {
+    path: '/participant/update/:id',
+    children: [
+      {
+        path: '/participant/update/:id',
+        name: 'participantUpdate',
+        component: () => import('@/views/participant/newParticipant.vue'),
+      },
+    ],
+  },
+  {
+    path: '/donation',
+    children: [
+      {
+        path: '/donation',
+        name: 'donation',
+        component: () => import('@/views/donation/donationPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/donationDetail/:id',
+    children: [
+      {
+        path: '/donationDetail/:id',
+        name: 'donationDetail',
+        component: () => import('@/views/donation/donationDetails.vue'),
+      },
+    ],
+  },
+  {
     path: '/donation/create',
     children: [
       {
@@ -123,12 +133,22 @@ const routes = [
     ],
   },
   {
-    path: '/member/create',
+    path: '/donation/update/:id',
     children: [
       {
-        path: '/member/create',
-        name: 'memeberCreate',
-        component: () => import('@/views/group/newMember.vue'),
+        path: '/donation/update/:id',
+        name: 'donationUpdate',
+        component: () => import('@/views/donation/newDonation.vue'),
+      },
+    ],
+  },
+  {
+    path: '/link',
+    children: [
+      {
+        path: '/link',
+        name: 'link',
+        component: () => import('@/views/linkPage.vue'),
       },
     ],
   },

@@ -2,7 +2,7 @@
     <v-col cols="12">
         <v-row no-gutters>
             <v-col cols="6" justify="start" align="start">
-                <p class="ml-10 mt-10 text-h2">Group Page</p>
+                <p class="ml-10 mt-10 text-h2">Members Page</p>
             </v-col>
             <!-- <v-col cols="6" justify="end" align="end">
                 <MemberModal />
@@ -28,13 +28,8 @@
 </template>
 
 <script>
-import MemberModal from '@/components/memberModal.vue';
-
 export default {
-    name: 'GroupPage',
-    components: {
-        MemberModal,
-    },
+    name: 'MemberPage',
     data() {
         return {
             groupHeader: [
@@ -60,7 +55,7 @@ export default {
     },
     methods: {
         newMember() {
-            this.$router.push('/member/create')
+            this.$router.push('/members/create')
         },
         deleteItem(item) {
         },

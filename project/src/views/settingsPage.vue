@@ -58,10 +58,6 @@ export default {
         const password = ref('********');
         const card1Height = ref(0);
 
-        const logout = () => {
-            this.$router.push('/login');
-        };
-
         onMounted(() => {
             // Update card1Height on mount
             updateCardHeight();
@@ -82,7 +78,6 @@ export default {
         return {
             email,
             password,
-            logout,
             card1Height,
             updateCardHeight
         };
@@ -91,6 +86,12 @@ export default {
     data() {
         return {
 
+        }
+    },
+
+    methods: {
+        logout() {
+            this.$router.push('/')
         }
     }
 };

@@ -11,27 +11,27 @@
 
             <v-divider></v-divider>
             <!-- Item Group -->
-            <v-list-item to="/group" height="70" color="#ffb300" draggable="false">
+            <v-list-item to="/members" height="70" color="#ffb300" draggable="false">
                 <v-list-item-icon><v-icon>mdi-account-group-outline</v-icon></v-list-item-icon>
-                <v-list-item-content><v-list-item-title>Group</v-list-item-title></v-list-item-content>
+                <v-list-item-content><v-list-item-title>Members</v-list-item-title></v-list-item-content>
             </v-list-item>
 
             <!-- Item Donations -->
-            <v-list-item to="/donations" height="70" color="#ffb300" draggable="false">
+            <v-list-item to="/link" height="70" color="#ffb300" draggable="false">
                 <v-list-item-icon><v-icon>mdi-hand-extended-outline</v-icon></v-list-item-icon>
-                <v-list-item-content><v-list-item-title>Donations</v-list-item-title></v-list-item-content>
+                <v-list-item-content><v-list-item-title>Link donation</v-list-item-title></v-list-item-content>
             </v-list-item>
 
             <!-- Item Participant Register -->
-            <v-list-item to="/participantRegister" height="70" color="#ffb300" draggable="false">
+            <v-list-item to="/participants" height="70" color="#ffb300" draggable="false">
                 <v-list-item-icon><v-icon>mdi-account-plus-outline</v-icon></v-list-item-icon>
-                <v-list-item-content><v-list-item-title>Participant Register</v-list-item-title></v-list-item-content>
+                <v-list-item-content><v-list-item-title>Participants</v-list-item-title></v-list-item-content>
             </v-list-item>
 
             <!-- Item Donation Register -->
-            <v-list-item to="/donationRegister" height="70" color="#ffb300" draggable="false">
+            <v-list-item to="/donation" height="70" color="#ffb300" draggable="false">
                 <v-list-item-icon><v-icon>mdi-package-variant-plus</v-icon></v-list-item-icon>
-                <v-list-item-content><v-list-item-title>Donation Register</v-list-item-title></v-list-item-content>
+                <v-list-item-content><v-list-item-title>Donations</v-list-item-title></v-list-item-content>
             </v-list-item>
 
             <!-- Item Settings -->

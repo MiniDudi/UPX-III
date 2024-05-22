@@ -77,22 +77,6 @@
           this.updateDonation();
         }
       },
-      async createDonation() {
-        if (this.$refs.form.validate()) {
-          try {
-            const donation = {
-              description: this.description,
-              quantity: this.quantity,
-              condition: this.condition
-            };
-            await addDoc(collection(db, 'donations'), donation);
-            this.$emit('donation-registered');
-            this.closeModal();
-          } catch (error) {
-            console.error("Erro ao cadastrar doação: ", error);
-          }
-        }
-      },
       async updateDonation() {
         if (this.$refs.form.validate()) {
           try {
