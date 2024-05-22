@@ -16,11 +16,11 @@
       <v-col cols="12" align="center" justify="center">
         <v-card class="ml-10 mr-10" height="460" elevation="3">
           <v-data-table-virtual class="table" :headers="participantHeaders" item-value="name" fixed-header
-            :items="participantData">
+            :items="participants">
             <template v-slot:item.actions="{ item }">
               <v-row no-gutter justify="start" align="center">
-                <v-btn @click="deleteItem(item)" color="blue" class="mr-3"><v-icon>mdi-pencil</v-icon></v-btn>
-                <v-btn @click="deleteItem(item)" color="red"><v-icon>mdi-trash-can</v-icon></v-btn>
+                <v-btn @click="updateParticipant(item)" color="blue" class="mr-3"><v-icon>mdi-pencil</v-icon></v-btn>
+                <v-btn @click="deleteParticipant(item)" color="red"><v-icon>mdi-trash-can</v-icon></v-btn>
               </v-row>
             </template>
           </v-data-table-virtual>
@@ -32,25 +32,20 @@
 
 
 <script>
-import { ref, onMounted } from 'vue';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase/index';
-import ParticipantModal from '@/components/participantModal.vue';
+import { db } from '../../firebase/index';
 
 export default {
   name: 'ParticipantRegister',
-  components: {
-    ParticipantModal,
-  },
   data() {
     return {
       participants: [],
       selectedParticipant: null,
       participantHeaders: [
         { title: 'id', key: 'id' },
-        { title: 'Nome', key: 'name' },
+        { title: 'Nome', key: 'nome' },
         { title: 'Email', key: 'email' },
-        { title: 'Telefone', key: 'phone' },
+        { title: 'Telefone', key: 'telefone' },
         { title: '', align: "center", key: 'actions', width: '20%' }
       ],
       participantData: [
@@ -62,7 +57,16 @@ export default {
       ]
     };
   },
+  async created() {
+    await this.fetchParticipants();
+  },
   methods: {
+    newParticipant() {
+      this.$router.push('/participant/create')
+    },
+    updateParticipant(item) {
+      this.$router.push(`/participant/update/${item.id}`)
+    },
     async fetchParticipants() {
       try {
         const querySnapshot = await getDocs(collection(db, 'participants'));
@@ -74,31 +78,19 @@ export default {
         console.error("Erro ao buscar os participantes: ", error);
       }
     },
-    selectParticipant(participant) {
-      this.selectedParticipant = participant;
-    },
-    openModal(mode, participant = null) {
-      const modal = this.$refs.participantModal;
-      modal.openModal(mode, participant);
-    },
-    newParticipant() {
-      this.$router.push('/participant/create')
-    },
-    async deleteParticipant(id) {
+    async deleteParticipant(item) {
       try {
-        await deleteDoc(doc(db, 'participants', id));
+        const participantRef = doc(db, 'participants', item.id);
+        await deleteDoc(participantRef);
+        this.$emit('participant-registered');
         this.fetchParticipants();
       } catch (error) {
-        console.error("Erro ao deletar o participante: ", error);
+        console.error("Erro ao excluir participante: ", error);
       }
     },
     editParticipant(participant) {
       this.$refs.participantModal.openModal('edit', participant);
     },
-  },
-  async mounted() {
-    await this.fetchParticipants();
-
   },
 }
 </script>

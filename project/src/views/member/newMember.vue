@@ -81,7 +81,7 @@ export default {
 
         },
         goBack() {
-            this.$router.push('/group')
+            this.$router.push('/members')
         }
     }
 }
