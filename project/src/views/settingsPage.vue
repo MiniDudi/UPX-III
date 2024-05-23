@@ -5,16 +5,16 @@
                 <p class="ml-10 mt-10 text-h2">Settings & Profile</p>
             </v-col>
             <v-col class="logout-btn" align="end" justify="end">
-                <v-btn @click="logout" class="mr-10 mt-15" color="red" elevation="3"
+                <v-btn @click="logout" class="mr-10 mt-15" color="red" elevation="3" rounded="0"
                     append-icon="mdi-logout">Logout</v-btn>
             </v-col>
         </v-row>
-        <v-row no-gutters align="center" justify="center" class="mt-15">
+        <v-row no-gutters class="mt-15">
             <v-col cols="7">
-                <v-card elevation="3" class="info-card ml-10 mr-10" id="card1" align="center" justify="center" ref="card1" height="300">
-                    <v-card-title class="section-title">User Information</v-card-title>
-                    <v-card-text align="center" justify="center">
-                        <v-row no-gutters align="center" justify="center">
+                <v-card elevation="3" class="info-card ml-10 mr-10" id="card1" ref="card1" height="300">
+                    <v-card-title class="section-title" align="center">User Information</v-card-title>
+                    <v-col cols="12" align="center" justify="center">
+                        <v-row no-gutters class="mr-10 ml-10">
                             <v-col cols="12">
                                 <v-text-field v-model="email" label="Email" clearable outlined
                                     prepend-icon="mdi-email" />
@@ -27,18 +27,19 @@
                         <v-row no-gutters align="center" justify="center">
                             <v-btn elevation="3" rounded="0" color="green">Salvar</v-btn>
                         </v-row>
-                    </v-card-text>
+                    </v-col>
                 </v-card>
             </v-col>
 
-            <v-col cols="5" align="center" justify="center">
-                <v-card elevation="3" class="avatar-card" align="center" justify="center" height="300">
-                    <v-card-title class="section-title">Profile Picture</v-card-title>
+            <v-col cols="5">
+                <v-card elevation="3" class="avatar-card" height="300">
+                    <v-card-title class="section-title" align="center">Profile Picture</v-card-title>
                     <v-col cols="12">
-                        <v-row no-gutters align="center" justify="center">
-                            <v-avatar size="150" color="transparent" elevation="3">
-                                <v-img src="@/styles/novomelao.png" alt="User Avatar" aspect-ratio="1"
-                                    class="avatar-image" />
+                        <v-row no-gutters justify="center">
+                            <v-avatar color="#FFC641" size="150" align="center" justify=center>
+                                <v-avatar size="130">
+                                    <v-img src="@/styles/placeholder.png" alt="User Avatar" aspect-ratio="1" />
+                                </v-avatar>
                             </v-avatar>
                         </v-row>
                     </v-col>
@@ -49,43 +50,12 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
-
 export default {
     name: 'SettingsPage',
-    setup() {
-        const email = ref('user@example.com');
-        const password = ref('********');
-        const card1Height = ref(0);
-
-        onMounted(() => {
-            // Update card1Height on mount
-            updateCardHeight();
-        });
-
-        const updateCardHeight = () => {
-            const card1 = document.getElementById('card1');
-            if (card1) {
-                card1Height.value = card1.offsetHeight;
-            }
-        };
-
-        // Watch for changes in email and password to update height if necessary
-        watch([email, password], () => {
-            updateCardHeight();
-        });
-
-        return {
-            email,
-            password,
-            card1Height,
-            updateCardHeight
-        };
-    },
-
     data() {
         return {
-
+            email: '',
+            senha: '',
         }
     },
 
@@ -112,9 +82,5 @@ export default {
     font-size: 18px;
     font-weight: 600;
     color: #FFC641;
-}
-
-.avatar-card {
-    transition: height 0.3s ease;
 }
 </style>
