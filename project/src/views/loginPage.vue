@@ -22,7 +22,7 @@
                 </v-list-item>
                 <v-list-item>
                     <v-text-field clearable v-model="password" label="Password" prepend-icon="mdi-lock" style="color: #000000"
-                        variant="underlined" width="20" />
+                        variant="underlined" />
                 </v-list-item>
             </div>
 

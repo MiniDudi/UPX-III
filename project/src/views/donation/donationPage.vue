@@ -7,24 +7,33 @@
             <!-- <v-col cols="6" justify="end" align="end">
                 <DonationModal />
             </v-col> -->
-            <v-col cols="6" justify="end" align="end">
-                <v-btn class="mr-10 mt-15" v-bind="activatorProps" text="Add Donation" elevation="0" color="#FFC641"
-                    @click="newDonation()"></v-btn>
-            </v-col>
         </v-row>
         <v-row no-gutters align="center" justify="center" class="mt-15">
             <v-col cols="12" align="center" justify="center">
                 <v-card class="ml-10 mr-10" height="460" elevation="3">
-                    <v-data-table-virtual class="table" :headers="donationHeaders" item-value="name" fixed-header
-                        :items="donations">
-                        <template v-slot:item.actions="{ item }">
-                            <v-row no-gutter justify="start" align="center">
-                                <v-btn @click="editDonation(item)" color="blue"
-                                    class="mr-3"><v-icon>mdi-pencil</v-icon></v-btn>
-                                <v-btn @click="deleteDonation(item)" color="red"><v-icon>mdi-trash-can</v-icon></v-btn>
-                            </v-row>
-                        </template>
-                    </v-data-table-virtual>
+                    <v-row no-gutters align="center">
+                        <v-col cols="6" align="center">
+                            <v-btn class="mt-4" v-bind="activatorProps" text="+ Donation" elevation="0" rounded="0"
+                                color="#FFC641" @click="newParticipant()"></v-btn>
+                        </v-col>
+                        <v-col cols="6" align="center">
+                            <v-text-field v-model="search" label="Search" class=" mr-5 mt-4" variant="underlined"
+                                prepend-icon="mdi-magnify"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-data-table-virtual class="table" :headers="donationHeaders" item-value="name" fixed-header
+                            :items="filteredDonations" height="400">
+                            <template v-slot:item.actions="{ item }">
+                                <v-row no-gutter justify="start" align="center">
+                                    <v-btn @click="editDonation(item)" color="blue" class="mr-3" elevation="0"
+                                        rounded="0"><v-icon>mdi-pencil</v-icon></v-btn>
+                                    <v-btn @click="deleteDonation(item)" color="red" elevation="0"
+                                        rounded="0"><v-icon>mdi-trash-can</v-icon></v-btn>
+                                </v-row>
+                            </template>
+                        </v-data-table-virtual>
+                    </v-row>
                 </v-card>
             </v-col>
         </v-row>
@@ -45,6 +54,7 @@ export default {
         return {
             donations: [],
             selectedDonation: null,
+            search: '',
             donationHeaders: [
                 { title: 'id', key: 'id' },
                 { title: 'Descrição', align: "center", key: 'description' },
@@ -61,6 +71,14 @@ export default {
             ],
 
         };
+    },
+    computed: {
+        filteredDonations() {
+            return this.donations.filter(donation => {
+                return donation.description.toLowerCase().includes(this.search.toLowerCase()) ||
+                    donation.condition.toLowerCase().includes(this.search.toLowerCase());
+            });
+        }
     },
     async created() {
         await this.fetchDonations();
@@ -108,6 +126,6 @@ export default {
 }
 
 .table {
-    padding: 5px 20px;
+    padding: 0px 20px 0px 20px;
 }
 </style>
