@@ -14,7 +14,7 @@
                     <v-row no-gutters align="center">
                         <v-col cols="6" align="center">
                             <v-btn class="mt-4" v-bind="activatorProps" text="+ Donation" elevation="0" rounded="0"
-                                color="#FFC641" @click="newParticipant()"></v-btn>
+                                color="#FFC641" @click="newDonation()"></v-btn>
                         </v-col>
                         <v-col cols="6" align="center">
                             <v-text-field v-model="search" label="Search" class=" mr-5 mt-4" variant="underlined"
