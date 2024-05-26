@@ -43,7 +43,7 @@ export default {
                 { id: 2, name: 'Maria', email: 'maria@example.com', position: 'Designer' },
                 { id: 3, name: 'Ana', email: 'ana@example.com', position: 'Analyst' },
                 { id: 4, name: 'Carlos', email: 'carlos@example.com', position: 'Project Manager' },
-                { id: 5, name: 'Paula', email: 'paula@example.com', position: 'Software Engineer' },
+                { id: 5, name: 'Dev', email: 'melaodev@gmail.com', position: 'Software Engineer' },
             ],
         }
     },
