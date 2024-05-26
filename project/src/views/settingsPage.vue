@@ -40,20 +40,17 @@
                 </v-card>
             </v-col>
 
-            <!-- Card com avatar à direita -->
-            <v-col cols="6" align="center">
-                <v-card elevation="3" class="avatar-card">
+            <v-col cols="5" align="center" justify="center">
+                <v-card elevation="3" class="avatar-card" align="center" justify="center" height="300">
                     <v-card-title class="section-title">Profile Picture</v-card-title>
-                    <v-card-text align="center">
-                        <v-avatar size="150" color="transparent" elevation="3">
-                            <v-img
-                                src="@/styles/novomelao.png"
-                                alt="User Avatar"
-                                aspect-ratio="1"
-                                class="avatar-image"
-                            />
-                        </v-avatar>
-                    </v-card-text>
+                    <v-col cols="12">
+                        <v-row no-gutters align="center" justify="center">
+                            <v-avatar size="150" color="transparent" elevation="3">
+                                <v-img src="@/styles/novomelao.png" alt="User Avatar" aspect-ratio="1"
+                                    class="avatar-image" />
+                            </v-avatar>
+                        </v-row>
+                    </v-col>
                 </v-card>
             </v-col>
         </v-row>
@@ -66,14 +63,26 @@ import { ref } from 'vue';
 export default {
     name: 'SettingsPage',
     setup() {
-        // Dados do usuário logado - esses valores devem ser obtidos de uma API ou armazenamento local
         const email = ref('user@example.com');
         const password = ref('********');
+        const card1Height = ref(0);
 
-        const logout = () => {
-            // Adicionar lógica de logout aqui, como limpar a sessão e redirecionar para a página de login
-            this.$router.push('/login');
+        onMounted(() => {
+            // Update card1Height on mount
+            updateCardHeight();
+        });
+
+        const updateCardHeight = () => {
+            const card1 = document.getElementById('card1');
+            if (card1) {
+                card1Height.value = card1.offsetHeight;
+            }
         };
+
+        // Watch for changes in email and password to update height if necessary
+        watch([email, password], () => {
+            updateCardHeight();
+        });
 
         return {
             email,
