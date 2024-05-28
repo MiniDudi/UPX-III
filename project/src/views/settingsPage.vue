@@ -31,18 +31,20 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="5">
-                <v-card elevation="3" class="avatar-card" height="300">
-                    <v-card-title class="section-title" align="center">Profile Picture</v-card-title>
-                    <v-col cols="12">
-                        <v-row no-gutters justify="center">
-                            <v-avatar color="#FFC641" size="150" align="center" justify=center>
-                                <v-avatar size="130">
-                                    <v-img src="@/styles/placeholder.png" alt="User Avatar" aspect-ratio="1" />
-                                </v-avatar>
-                            </v-avatar>
-                        </v-row>
-                    </v-col>
+            <!-- Card com avatar à direita -->
+            <v-col cols="6" align="center">
+                <v-card elevation="3" class="avatar-card">
+                    <v-card-title class="section-title">Profile Picture</v-card-title>
+                    <v-card-text align="center">
+                        <v-avatar size="150" color="transparent" elevation="3">
+                            <v-img
+                                src="@/styles/novomelao.png"
+                                alt="User Avatar"
+                                aspect-ratio="1"
+                                class="avatar-image"
+                            />
+                        </v-avatar>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
@@ -52,7 +54,16 @@
 <script>
 export default {
     name: 'SettingsPage',
-    data() {
+    setup() {
+        // Dados do usuário logado - esses valores devem ser obtidos de uma API ou armazenamento local
+        const email = ref('user@example.com');
+        const password = ref('********');
+
+        const logout = () => {
+            // Adicionar lógica de logout aqui, como limpar a sessão e redirecionar para a página de login
+            this.$router.push('/login');
+        };
+
         return {
             email: '',
             senha: '',

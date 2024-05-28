@@ -19,15 +19,14 @@
                 </p>
             </v-col>
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="EcoCommunity" width="250" class="section-image"
-                    elevation="3" />
+                <v-img src="@/styles/sobre.png" alt="EcoCommunity" width="250" class="section-image" elevation="3" />
             </v-col>
         </v-row>
 
         <!-- Seção 2: Objetivo -->
         <v-row no-gutters align="center" justify="center" elevation="3" class="section-container">
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="Objetivo" width="250" class="section-image" elevation="3" />
+                <v-img src="@/styles/objetivo.png" alt="Objetivo" width="250" class="section-image" elevation="3" />
             </v-col>
             <v-col cols="6">
                 <div class="section-title">Objetivo</div>
@@ -50,21 +49,21 @@
                 </p>
             </v-col>
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="Nossa visão" width="250" class="section-image" elevation="3" />
+                <v-img src="@/styles/visao.png" alt="Nossa visão" width="250" class="section-image" elevation="3" />
             </v-col>
         </v-row>
 
         <!-- Seção 4: Time -->
         <v-row no-gutters align="center" justify="center" elevation="3" class="section-container">
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="Time" width="250" class="section-image" elevation="3" />
+                <v-img src="@/styles/Equipe.png" alt="Time" width="250" class="section-image" elevation="3" />
             </v-col>
             <v-col cols="6">
                 <div class="section-title">Time</div>
                 <p class="section-content">
                     Nosso time é composto por desenvolvedores talentosos e dedicados que trabalham incansavelmente para
-                    aprimorar o EcoCommunity. Nossa equipe é comprometida com o sucesso de nossos clientes e usuários
-                    finais, garantindo uma experiência de alta qualidade e suporte contínuo.
+                    aprimorar o EcoCommunity. Nossa equipe é comprometida com o sucesso, buscando sempre novas ideias,
+                    para promover uma experiência de alta qualidade e suporte contínuo.
                 </p>
             </v-col>
         </v-row>
@@ -80,20 +79,21 @@
                 </p>
             </v-col>
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="Contato" width="250" class="section-image" elevation="3" />
+                <v-img src="@/styles/contato.png" alt="Contato" width="250" class="section-image" elevation="3" />
             </v-col>
         </v-row>
 
         <!-- Seção 6: Direitos Reservados -->
         <v-row no-gutters align="center" justify="center" elevation="3" class="section-container">
             <v-col cols="6" align="center">
-                <v-img src="@/styles/novomelao.png" alt="Direitos Reservados" width="250" class="section-image"
+                <v-img src="@/styles/direitos.png" alt="Direitos Reservados" width="250" class="section-image"
                     elevation="3" />
             </v-col>
             <v-col cols="6">
                 <div class="section-title">Direitos Reservados</div>
                 <p class="section-content">
-                    Todos os direitos reservados © 2024 EcoCommunity.
+                    Todos os direitos são públicos, pois o EcoCommunity é uma plataforma de código aberto, com objrtivo
+                    em promover o empreendedorismo social, através da tecnologia.
                 </p>
             </v-col>
         </v-row>
