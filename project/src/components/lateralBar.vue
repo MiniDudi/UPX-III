@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer v-if="$route.path !== '/register' && $route.path != '/'" :width="200" align="center"
-        justify="center" :elevation="1" permanent>
+        justify="center" :elevation="1" :permanent="md">
         <v-list density="compact" nav>
 
             <!-- Item Home -->

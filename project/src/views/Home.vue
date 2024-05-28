@@ -8,7 +8,7 @@
     <v-row no-gutters class="mt-10">
       <v-col cols="9">
         <v-row no-gutters>
-          <v-col v-for="participant in participants" :key="participant" lg="3" md="2" style="margin-bottom: 20px;"
+          <v-col v-for="participant in participants" :key="participant" lg="3" md="4" sm="6" style="margin-bottom: 20px;"
             align="center">
             <v-card @click="onCardClick()" width="200" height="300" elevation="7" border="5">
               <v-avatar color="#FFC641" size="80" class="mt-6" align="center" justify=center>
