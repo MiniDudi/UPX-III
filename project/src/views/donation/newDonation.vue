@@ -2,7 +2,7 @@
     <v-col cols="12">
         <v-row no-gutters>
             <v-col cols="12">
-                <p v-if="this.pageId" class="text-h2 mt-10 ml-10">Edit Donation</p>
+                <p v-if="pageId" class="text-h2 mt-10 ml-10">Edit Donation</p>
                 <p v-else class="text-h2 mt-10 ml-10">New Donation</p>
             </v-col>
         </v-row>
@@ -10,26 +10,35 @@
             <v-col cols="12">
                 <v-card class="mr-10 ml-10" elevation="3">
                     <v-card-title>Add a new Donation</v-card-title>
-                    <v-row no-gutter class="mr-5 ml-5">
-
-
-                        <v-col cols="12">
+                    <v-row no-gutters class="mr-5 ml-5">
+                        <v-col cols="7">
                             <v-row no-gutters>
                                 <div class="text-subtitle-1 text-medium-emphasis">Donation Title</div>
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
-                                <v-text-field v-model="donationTilte" label="Title" outlined
-                                    prepend-icon="mdi-format-title"></v-text-field></v-row>
+                                <v-text-field v-model="donationTitle" label="Title" outlined
+                                    prepend-icon="mdi-format-title"></v-text-field>
+                            </v-row>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-row no-gutters>
+                                <div class="text-subtitle-1 text-medium-emphasis">Participante</div>
+                            </v-row>
+                            <v-row no-gutters align="center" justify="center">
+                                <v-select v-model="donationDoador" label="Doador" :items="filter"
+                                    prepend-icon="mdi-account" required></v-select>
+                            </v-row>
                         </v-col>
                     </v-row>
-                    <v-row no-gutter class="mr-5 ml-5">
+                    <v-row no-gutters class="mr-5 ml-5">
                         <v-col cols="6">
                             <v-row no-gutters>
-                                <div class="text-subtitle-1 text-medium-emphasis">Donation quantity</div>
+                                <div class="text-subtitle-1 text-medium-emphasis">Donation Quantity</div>
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
                                 <v-text-field v-model="donationQuantity" label="Quantity" outlined
-                                    prepend-icon="mdi-equalizer"></v-text-field></v-row>
+                                    prepend-icon="mdi-equalizer"></v-text-field>
+                            </v-row>
                         </v-col>
                         <v-col cols="6">
                             <v-row no-gutters>
@@ -37,14 +46,16 @@
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
                                 <v-text-field v-model="donationCondition" label="Condition" outlined
-                                    prepend-icon="mdi-archive"></v-text-field></v-row>
+                                    prepend-icon="mdi-archive"></v-text-field>
+                            </v-row>
                         </v-col>
                     </v-row>
-                    <v-row no-gutter class="ml-5 mb-5" align="start" justify="center">
+                    <v-row no-gutters class="ml-5 mb-5" align="start" justify="center">
                         <v-col cols="12" align="start" justify="center">
                             <v-btn @click="goBack()" class="mr-3" rounded="0" elevation="0"
                                 color="#FFC641">Return</v-btn>
-                            <v-btn v-if="this.pageId" @click="handle()" rounded="0" elevation="0" color="#FFC641">Update</v-btn>
+                            <v-btn v-if="pageId" @click="handle()" rounded="0" elevation="0"
+                                color="#FFC641">Update</v-btn>
                             <v-btn v-else @click="handle()" rounded="0" elevation="0" color="#FFC641">Create</v-btn>
                         </v-col>
                     </v-row>
@@ -56,23 +67,41 @@
 
 <script>
 import { db } from '../../firebase/index';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDoc, getDocs } from 'firebase/firestore';
 
 export default {
     data() {
         return {
             pageId: null,
-            donations: [],
-            donationTilte: '',
+            donationTitle: '',
             donationCondition: '',
             donationQuantity: '',
-        }
+            donationDoador: '',
+            participants: [],
+            participantTest: [
+                { title: 'dudu', value: 1 },
+            ]
+        };
     },
     async created() {
         this.verifyPageId();
         if (this.pageId) {
             await this.getDonationById(this.pageId);
         }
+        await this.loadParticipants();
+    },
+    computed: {
+        filter() {
+            const filter = this.participants.filter(participant => {
+                return participant.status === 'Doador';
+            });
+
+            return filter.map(participant => ({
+                ...participant,
+                value: participant.id,
+                title: participant.nome
+            }));
+        },
     },
     methods: {
         handle() {
@@ -83,34 +112,36 @@ export default {
             }
         },
         async createDonation() {
-            if (this.donationTilte && this.donationCondition && this.donationQuantity) {
+            if (this.donationTitle && this.donationCondition && this.donationQuantity && this.donationDoador) {
                 try {
                     const donation = {
-                        description: this.donationTilte,
+                        description: this.donationTitle,
                         quantity: this.donationQuantity,
-                        condition: this.donationCondition
+                        condition: this.donationCondition,
+                        doador: this.donationDoador,
                     };
                     await addDoc(collection(db, 'donations'), donation);
                     this.$emit('donation-registered');
-                    this.$router.push('/donation')
+                    this.$router.push('/donation');
                 } catch (error) {
                     console.error("Erro ao cadastrar doação: ", error);
                 }
             } else {
-                return console.log("Erro to create donation");
+                console.log("Erro ao criar doação: campos obrigatórios não preenchidos.");
             }
         },
         async updateDonation() {
-            if (this.donationTilte && this.donationCondition && this.donationQuantity) {
+            if (this.donationTitle && this.donationCondition && this.donationQuantity && this.donationDoador) {
                 try {
                     const donationRef = doc(db, 'donations', this.pageId);
                     await updateDoc(donationRef, {
-                        description: this.donationTilte,
+                        description: this.donationTitle,
                         quantity: this.donationQuantity,
-                        condition: this.donationCondition
+                        condition: this.donationCondition,
+                        doador: this.donationDoador,
                     });
                     this.$emit('donation-registered');
-                    this.$router.push('/donation')
+                    this.$router.push('/donation');
                 } catch (error) {
                     console.error("Erro ao atualizar doação: ", error);
                 }
@@ -122,9 +153,10 @@ export default {
                 const donationSnap = await getDoc(donationRef);
                 if (donationSnap.exists()) {
                     const donation = donationSnap.data();
-                    this.donationTilte = donation.description;
+                    this.donationTitle = donation.description;
                     this.donationQuantity = donation.quantity;
                     this.donationCondition = donation.condition;
+                    this.donationDoador = donation.doador;
                 } else {
                     console.log("No such document!");
                 }
@@ -132,17 +164,63 @@ export default {
                 console.error("Erro ao buscar doação: ", error);
             }
         },
+        async loadParticipants() {
+            try {
+                const participantsSnapshot = await getDocs(collection(db, 'participants'));
+                this.participants = [];
+                participantsSnapshot.forEach((doc) => {
+                    this.participants.push({ id: doc.id, ...doc.data() })
+                });
+            } catch (error) {
+                console.error('Erro ao carregar participantes: ', error);
+            }
+        },
         verifyPageId() {
             if (this.$route.params.id) {
                 this.pageId = this.$route.params.id;
-            } else {
-                return;
             }
         },
         goBack() {
-            this.$router.push('/donation')
+            this.$router.push('/donation');
         }
-    }
+    },
+
+}
+</script>
+
+<style scoped>
+.page-title {
+    font-family: "Rubik", sans-serif;
+    font-size: 38px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-</script>
+.section-title {
+    font-family: "Rubik", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.scroll-section {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.table {
+    padding: 5px 20px;
+}
+
+v-card {
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+v-btn {
+    margin-top: 20px;
+    color: #FFC641;
+}
+</style>

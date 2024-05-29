@@ -38,11 +38,23 @@
                                     prepend-icon="mdi-phone"></v-text-field></v-row>
                         </v-col>
                     </v-row>
+                    <v-row no-gutters class="mr-5 ml-5">
+                        <v-col cols="12">
+                            <v-radio-group inline>
+                                <template v-slot:label>
+                                    <div class="mt-5">This participant is <strong>Receptor</strong> or <strong>Donator</strong>?</div>
+                                </template>
+                                <v-radio v-model="participantType" label="Receptor" value="Receptor"></v-radio>
+                                <v-radio v-model="participantType" label="Donator" value="Donator"></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                    </v-row>
                     <v-row no-gutter class="ml-5 mb-5" align="start" justify="center">
                         <v-col cols="12" align="start" justify="center">
                             <v-btn @click="goBack()" class="mr-3" rounded="0" elevation="0"
                                 color="#FFC641">Return</v-btn>
-                            <v-btn v-if="this.pageId" @click="handle()" rounded="0" elevation="0" color="#FFC641">Update</v-btn>
+                            <v-btn v-if="this.pageId" @click="handle()" rounded="0" elevation="0"
+                                color="#FFC641">Update</v-btn>
                             <v-btn v-else @click="handle()" rounded="0" elevation="0" color="#FFC641">Create</v-btn>
                         </v-col>
                     </v-row>
@@ -63,6 +75,7 @@ export default {
             participantName: '',
             participantEmail: '',
             participantPhone: '',
+            participantType: 'Receptor',
             status: 'inactive',
         }
     },
@@ -87,6 +100,7 @@ export default {
                         nome: this.participantName,
                         email: this.participantEmail,
                         telefone: this.participantPhone,
+                        type: this.participantType,
                         status: this.status,
                     };
                     await addDoc(collection(db, 'participants'), participant);
@@ -105,6 +119,7 @@ export default {
                         nome: this.participantName,
                         email: this.participantEmail,
                         telefone: this.participantPhone,
+                        type: this.participantType,
                         status: this.status,
                     });
                     this.$emit('participant-registered');
@@ -123,6 +138,7 @@ export default {
                     this.participantName = participant.nome;
                     this.participantEmail = participant.email;
                     this.participantPhone = participant.telefone;
+                    this.participantType = participant.type;
                     this.status = participant.status;
                 } else {
                     console.log("No such document!");

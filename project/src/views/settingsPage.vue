@@ -10,7 +10,7 @@
             </v-col>
         </v-row>
         <v-row no-gutters class="mt-15">
-            <v-col cols="7">
+            <v-col cols="8">
                 <v-card elevation="3" class="info-card ml-10 mr-10" id="card1" ref="card1" height="300">
                     <v-card-title class="section-title" align="center">User Information</v-card-title>
                     <v-col cols="12" align="center" justify="center">
@@ -32,17 +32,13 @@
             </v-col>
 
             <!-- Card com avatar à direita -->
-            <v-col cols="6" align="center">
-                <v-card elevation="3" class="avatar-card">
+            <v-col cols="4" align="center">
+                <v-card elevation="3" class="avatar-card" height="300">
                     <v-card-title class="section-title">Profile Picture</v-card-title>
                     <v-card-text align="center">
                         <v-avatar size="150" color="transparent" elevation="3">
-                            <v-img
-                                src="@/styles/novomelao.png"
-                                alt="User Avatar"
-                                aspect-ratio="1"
-                                class="avatar-image"
-                            />
+                            <v-img src="@/styles/novomelao.png" alt="User Avatar" aspect-ratio="1"
+                                class="avatar-image" />
                         </v-avatar>
                     </v-card-text>
                 </v-card>
@@ -54,22 +50,12 @@
 <script>
 export default {
     name: 'SettingsPage',
-    setup() {
-        // Dados do usuário logado - esses valores devem ser obtidos de uma API ou armazenamento local
-        const email = ref('user@example.com');
-        const password = ref('********');
-
-        const logout = () => {
-            // Adicionar lógica de logout aqui, como limpar a sessão e redirecionar para a página de login
-            this.$router.push('/login');
-        };
-
+    data() {
         return {
             email: '',
-            senha: '',
+            password: '',
         }
     },
-
     methods: {
         logout() {
             this.$router.push('/')
