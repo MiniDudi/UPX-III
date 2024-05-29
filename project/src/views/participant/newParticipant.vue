@@ -10,14 +10,30 @@
             <v-col cols="12">
                 <v-card class="mr-10 ml-10" elevation="3">
                     <v-card-title>Add a new Participant</v-card-title>
-                    <v-row no-gutter class="mr-5 ml-5">
-                        <v-col cols="12">
+                    <v-row no-gutter class="mr-5 ml-5" align="center" justify="center">
+                        <v-col cols="6">
                             <v-row no-gutters>
                                 <div class="text-subtitle-1 text-medium-emphasis">Participant Name</div>
                             </v-row>
                             <v-row no-gutters align="center" justify="center">
                                 <v-text-field v-model="participantName" label="Name" outlined
                                     prepend-icon="mdi-account"></v-text-field></v-row>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-row no-gutters>
+                                <div class="text-subtitle-1 text-medium-emphasis">Participant Picture</div>
+                            </v-row>
+                            <v-row no-gutters align="center" justify="center">
+                                <v-file-input @change="onFileChange" :rules="rules" accept="image/png, image/jpeg, image/bmp" label="Avatar"
+                                    placeholder="Pick an avatar" prepend-icon="mdi-camera"></v-file-input>
+                            </v-row>
+                        </v-col>
+                        <v-col cols="2" align="center" justify="center">
+                            <v-avatar color="#FFC641" size="150" class="mt-6" align="center">
+                                <v-avatar color="surface-variant" size="130">
+                                    <img v-if="selectedImageUrl" :src="selectedImageUrl" alt="Participant Avatar">
+                                </v-avatar>
+                            </v-avatar>
                         </v-col>
                     </v-row>
                     <v-row no-gutter class="mr-5 ml-5">
@@ -42,7 +58,9 @@
                         <v-col cols="12">
                             <v-radio-group inline>
                                 <template v-slot:label>
-                                    <div class="mt-5">This participant is <strong>Receptor</strong> or <strong>Donator</strong>?</div>
+                                    <div class="mt-5">This participant is <strong>Receptor</strong> or
+                                        <strong>Donator</strong>?
+                                    </div>
                                 </template>
                                 <v-radio v-model="participantType" label="Receptor" value="Receptor"></v-radio>
                                 <v-radio v-model="participantType" label="Donator" value="Donator"></v-radio>
@@ -75,6 +93,7 @@ export default {
             participantName: '',
             participantEmail: '',
             participantPhone: '',
+            selectedImageUrl: '',
             participantType: 'Receptor',
             status: 'inactive',
         }
@@ -102,6 +121,7 @@ export default {
                         telefone: this.participantPhone,
                         type: this.participantType,
                         status: this.status,
+                        avatar: this.selectedImageUrl,
                     };
                     await addDoc(collection(db, 'participants'), participant);
                     this.$emit('participant-registered');
@@ -121,6 +141,7 @@ export default {
                         telefone: this.participantPhone,
                         type: this.participantType,
                         status: this.status,
+                        avatar: this.selectedImageUrl,
                     });
                     this.$emit('participant-registered');
                     this.$router.push('/participants')
@@ -140,6 +161,7 @@ export default {
                     this.participantPhone = participant.telefone;
                     this.participantType = participant.type;
                     this.status = participant.status;
+                    this.selectedImageUrl = participant.avatar || '';
                 } else {
                     console.log("No such document!");
                 }
@@ -156,8 +178,17 @@ export default {
         },
         goBack() {
             this.$router.push('/participants')
-        }
+        },
+        onFileChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.selectedImageUrl = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        },
     }
 }
-
 </script>
