@@ -9,17 +9,13 @@
             <v-col cols="12" align="center" justify="center">
                 <v-card class="ml-10 mr-10" elevation="3">
                     <v-row no-gutters align="center">
-                        <v-col cols="6" align="center">
-                            <v-btn class="mt-4" v-bind="activatorProps" text="+ Donation" elevation="0" rounded="0"
-                                color="#FFC641" @click="newDonation()"></v-btn>
-                        </v-col>
-                        <v-col cols="6" align="center">
-                            <v-text-field v-model="search" label="Search" class=" mr-5 mt-4" variant="underlined"
+                        <v-col cols="8" align="center">
+                            <v-text-field v-model="search" label="Search" class=" ml-5 mt-4" variant="underlined"
                                 prepend-icon="mdi-magnify"></v-text-field>
                         </v-col>
                         <v-col cols="4" align="center">
-                            <v-btn class="mt-4" text="+ Donation" elevation="0" rounded="0"
-                                color="#FFC641" @click="newDonation"></v-btn>
+                            <v-btn class="mt-4" v-bind="activatorProps" text="+ Donation" elevation="0" rounded="0"
+                                color="#FFC641" @click="newDonation()"></v-btn>
                         </v-col>
                     </v-row>
                     <v-row no-gutters>
