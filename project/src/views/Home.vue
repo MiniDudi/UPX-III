@@ -8,11 +8,14 @@
     <v-row no-gutters class="mt-10">
       <v-col cols="9">
         <v-row no-gutters>
-          <v-col v-for="participant in participants" :key="participant" lg="3" md="4" sm="6" style="margin-bottom: 20px;"
+          <v-col v-for="participant in participants" :key="participant.id" lg="3" md="4" sm="6" style="margin-bottom: 20px;"
             align="center">
-            <v-card width="200" height="300" elevation="7" border="5">
-              <v-avatar color="#FFC641" size="80" class="mt-6" align="center" justify=center>
-                <v-avatar color="surface-variant" size="70"><v-img src="@/styles/gato.jpeg"></v-img></v-avatar>
+            <v-card width="200" height="300" elevation="7" border="5" @click="onCardClick(participant.id)">
+              <v-avatar color="#FFC641" size="80" class="mt-6" align="center" justify="center">
+                <v-avatar color="surface-variant" size="70">
+                  <v-img v-if="participant.avatar" :src="participant.avatar"></v-img>
+                  <v-img v-else src="@/styles/gato.jpeg"></v-img>
+                </v-avatar>
               </v-avatar>
               <v-card-text class="pb-0">{{ participant.nome }}</v-card-text>
               <p class="text-caption">Mercado</p>
@@ -32,26 +35,22 @@
 </template>
 
 <script>
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/index';
 
 export default {
   name: 'HomePage',
   data() {
     return {
-      itens: 33,
       participants: [],
     }
-  },
-  computed() {
-
   },
   created() {
     this.fetchParticipants();
   },
   methods: {
-    onCardClick() {
-      this.$router.push('/participants')
+    onCardClick(participantId) {
+      this.$router.push(`/participants/${participantId}`);
     },
     async fetchParticipants() {
       try {
@@ -65,9 +64,7 @@ export default {
       }
     },
   }
-
 }
-
 </script>
 
 <style scoped>
