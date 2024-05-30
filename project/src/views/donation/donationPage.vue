@@ -52,10 +52,11 @@ export default {
             selectedDonation: null,
             search: '',
             donationHeaders: [
-                { title: 'ID', value: 'id' },
+               
                 { title: 'Descrição', value: 'description' },
                 { title: 'Quantidade', value: 'quantity', align: 'center' },
                 { title: 'Condição', value: 'condition', align: 'center' },
+                { title: 'Doador', value: 'doador', align: 'center' },
                 { title: '', value: 'actions', align: 'center' }
             ],
         };

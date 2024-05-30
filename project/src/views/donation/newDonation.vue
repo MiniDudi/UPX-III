@@ -98,7 +98,7 @@ export default {
 
             return filter.map(participant => ({
                 ...participant,
-                value: participant.id,
+              //  value: participant.id,
                 title: participant.nome
             }));
         },
