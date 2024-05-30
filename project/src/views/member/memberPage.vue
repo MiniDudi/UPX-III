@@ -19,7 +19,7 @@
                         </v-col>
                     </v-row>
                     <v-row no-gutters>
-                        <v-data-table :headers="groupHeader" :items="filteredParticipants" :search="search"
+                        <v-data-table :headers="groupHeader" :items="filteredMembers" :search="search"
                             :items-per-page="10" class="table" fixed-header>
                             <template v-slot:item.actions="{ item }">
                                 <v-row no-gutter justify="start" align="center">
@@ -27,7 +27,7 @@
                                         rounded="0">
                                         <v-icon>mdi-pencil</v-icon>
                                     </v-btn>
-                                    <v-btn @click="" color="red" elevation="0" rounded="0">
+                                    <v-btn @click="deleteMember(item)" color="red" elevation="0" rounded="0">
                                         <v-icon>mdi-trash-can</v-icon>
                                     </v-btn>
                                 </v-row>
@@ -39,55 +39,61 @@
         </v-row>
     </v-col>
 </template>
-
 <script>
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase/index';
+
 export default {
     name: 'MemberPage',
     data() {
         return {
+            members: [],
             search: '',
             groupHeader: [
-                { title: 'Crachá', align: 'start', key: 'id' },
-                { title: 'Nome', align: 'start', key: 'name' },
-                { title: 'E-mail', align: 'center', key: 'email' },
-                { title: '', align: 'center', key: 'actions' },
-            ],
-            groupData: [
-                { id: 1, name: 'John', email: 'john@example.com', position: 'Developer' },
-                { id: 2, name: 'Maria', email: 'maria@example.com', position: 'Designer' },
-                { id: 3, name: 'Ana', email: 'ana@example.com', position: 'Analyst' },
-                { id: 4, name: 'Carlos', email: 'carlos@example.com', position: 'Project Manager' },
-                { id: 5, name: 'Dev', email: 'melaodev@gmail.com', position: 'Software Engineer' },
+                { title: 'Nome', align: 'start', value: 'nome' },
+                { title: 'E-mail', align: 'center', value: 'email' },
+                { title: '', align: 'center', value: 'actions' },
             ],
         }
     },
     computed: {
-        filteredParticipants() {
-            return this.groupData.filter(participant => {
-                return participant.name.toLowerCase().includes(this.search.toLowerCase()) ||
-                    participant.email.toLowerCase().includes(this.search.toLowerCase()) ||
-                    participant.position.toLowerCase().includes(this.search.toLowerCase());
+        filteredMembers() {
+            return this.members.filter(member => {
+                return member.nome.toLowerCase().includes(this.search.toLowerCase()) ||
+                       member.email.toLowerCase().includes(this.search.toLowerCase());
             });
         }
     },
-    created() {
-
+    async created() {
+        await this.fetchMembers();
     },
     methods: {
         newMember() {
-            this.$router.push('/members/create')
+            this.$router.push('/members/create');
         },
         updateMember(item) {
-            this.$router.push(`/member/update/${item.id}`)
+            this.$router.push(`/members/update/${item.id}`);
         },
-        deleteItem(item) {
+        async fetchMembers() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'members'));
+                this.members = [];
+                querySnapshot.forEach((doc) => {
+                    this.members.push({ id: doc.id, ...doc.data() });
+                });
+            } catch (error) {
+                console.error("Erro ao buscar os membros: ", error);
+            }
         },
+        async deleteMember(item) {
+            try {
+                const memberRef = doc(db, 'members', item.id);
+                await deleteDoc(memberRef);
+                this.fetchMembers();
+            } catch (error) {
+                console.error("Erro ao excluir o membro: ", error);
+            }
+        }
     }
 }
 </script>
-
-<style>
-.table {
-    padding: 5px 20px 5px 20px;
-}
-</style>

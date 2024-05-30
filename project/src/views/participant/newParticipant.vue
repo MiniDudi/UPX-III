@@ -54,19 +54,18 @@
                                     prepend-icon="mdi-phone"></v-text-field></v-row>
                         </v-col>
                     </v-row>
-                    <v-row no-gutters class="mr-5 ml-5">
-                        <v-col cols="12">
-                            <v-radio-group inline>
-                                <template v-slot:label>
-                                    <div class="mt-5">This participant is <strong>Receptor</strong> or
-                                        <strong>Donator</strong>?
-                                    </div>
-                                </template>
-                                <v-radio v-model="participantType" label="Receptor" value="Receptor"></v-radio>
-                                <v-radio v-model="participantType" label="Donator" value="Donator"></v-radio>
-                            </v-radio-group>
-                        </v-col>
-                    </v-row>
+                <v-row no-gutters class="mr-5 ml-5">
+                    <v-col cols="12">
+                       <v-radio-group v-model="status" inline>
+                       <template v-slot:label>
+                         <div class="mt-5">This participant is <strong>Receptor</strong> or <strong>Donator</strong>?</div>
+                       </template>
+                       <v-radio label="Receptor" value="Receptor"></v-radio>
+                       <v-radio label="Doador" value="Doador"></v-radio>
+                       </v-radio-group>
+                     </v-col>
+                </v-row>
+
                     <v-row no-gutter class="ml-5 mb-5" align="start" justify="center">
                         <v-col cols="12" align="start" justify="center">
                             <v-btn @click="goBack()" class="mr-3" rounded="0" elevation="0"
@@ -84,7 +83,7 @@
 
 <script>
 import { db } from '../../firebase/index';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
 
 export default {
     data() {
@@ -94,14 +93,13 @@ export default {
             participantEmail: '',
             participantPhone: '',
             selectedImageUrl: '',
-            participantType: 'Receptor',
-            status: 'inactive',
+            status: '', 
         }
     },
     async created() {
         this.verifyPageId();
         if (this.pageId) {
-            await this.getDonationById(this.pageId);
+            await this.getParticipantById(this.pageId); 
         }
     },
     methods: {
@@ -113,44 +111,42 @@ export default {
             }
         },
         async createParticipant() {
-            if (this.participantName && this.participantEmail && this.participantPhone) {
+            if (this.participantName && this.participantEmail && this.participantPhone && this.status) {
                 try {
                     const participant = {
                         nome: this.participantName,
                         email: this.participantEmail,
                         telefone: this.participantPhone,
-                        type: this.participantType,
                         status: this.status,
                         avatar: this.selectedImageUrl,
                     };
                     await addDoc(collection(db, 'participants'), participant);
                     this.$emit('participant-registered');
-                    this.$router.push('/participants')
+                    this.$router.push('/participants');
                 } catch (error) {
                     console.error("Erro ao cadastrar participante: ", error);
                 }
             }
         },
         async updateParticipant() {
-            if (this.participantName && this.participantEmail && this.participantPhone) {
+            if (this.participantName && this.participantEmail && this.participantPhone && this.status) {
                 try {
                     const participantRef = doc(db, 'participants', this.pageId);
                     await updateDoc(participantRef, {
                         nome: this.participantName,
                         email: this.participantEmail,
                         telefone: this.participantPhone,
-                        type: this.participantType,
                         status: this.status,
                         avatar: this.selectedImageUrl,
                     });
                     this.$emit('participant-registered');
-                    this.$router.push('/participants')
+                    this.$router.push('/participants');
                 } catch (error) {
                     console.error("Erro ao atualizar participante: ", error);
                 }
             }
         },
-        async getDonationById(id) {
+        async getParticipantById(id) {
             try {
                 const participantRef = doc(db, 'participants', id);
                 const participantSnap = await getDoc(participantRef);
@@ -159,25 +155,22 @@ export default {
                     this.participantName = participant.nome;
                     this.participantEmail = participant.email;
                     this.participantPhone = participant.telefone;
-                    this.participantType = participant.type;
                     this.status = participant.status;
                     this.selectedImageUrl = participant.avatar || '';
                 } else {
                     console.log("No such document!");
                 }
             } catch (error) {
-                console.error("Erro ao buscar doação: ", error);
+                console.error("Erro ao buscar participante: ", error);
             }
         },
         verifyPageId() {
             if (this.$route.params.id) {
                 this.pageId = this.$route.params.id;
-            } else {
-                return;
             }
         },
         goBack() {
-            this.$router.push('/participants')
+            this.$router.push('/participants');
         },
         onFileChange(event) {
             const file = event.target.files[0];

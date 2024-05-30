@@ -50,7 +50,6 @@ export default {
       participants: [],
       search: '',
       participantHeaders: [
-        { title: 'ID', align: 'start', value: 'id' },
         { title: 'Nome', align: 'start', value: 'nome' },
         { title: 'Email', align: 'start', value: 'email' },
         { title: 'Telefone', align: 'center', value: 'telefone' },
